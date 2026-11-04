@@ -1,4 +1,3 @@
-
 """Simple workflows using a shared SmartCareDataStore object."""
 
 from datetime import datetime
@@ -104,20 +103,25 @@ class AppointmentService:
         """
         patient = self.data_store.find_patient(patient_id)
         practitioner = self.data_store.find_practitioner(practitioner_id)
+
         if patient is None:
             raise LookupError('Patient not found')
+
         if practitioner is None:
             raise LookupError('Practitioner not found')
+
         appointment = Appointment(
             appointment_id,
             patient,
             practitioner,
             date_time,
         )
+
         if self.data_store.find_appointment(
             appointment.appointment_id,
         ) is not None:
             raise ValueError('Appointment ID already exists')
+
         if self.data_store.has_practitioner_conflict(
             practitioner.practitioner_id,
             date_time,
@@ -125,6 +129,7 @@ class AppointmentService:
             raise ValueError(
                 'Practitioner already has a SCHEDULED appointment at this time',
             )
+
         self.data_store.add_appointment(appointment)
         return appointment
 
@@ -135,16 +140,18 @@ class AppointmentService:
         records.
         """
         appointment = self.data_store.find_appointment(appointment_id)
+
         if appointment is None:
             raise LookupError('Appointment not found')
+
         return appointment
 
     def cancel_appointment(self, appointment_id: str) -> Appointment:
-        """Cancel a scheduled appointment through the domain method.
+        """Cancel a scheduled appointment and retain its history.
 
-        Return the same stored appointment object. Unknown IDs raise
-        LookupError; invalid transitions raise ValueError and leave
-        state unchanged.
+        Raise ValueError for blank or invalid IDs and illegal status
+        transitions. Raise LookupError if the appointment does not exist.
+        Return the same stored appointment object.
         """
         appointment = self.data_store.find_appointment(appointment_id)
 
