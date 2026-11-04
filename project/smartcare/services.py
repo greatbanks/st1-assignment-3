@@ -33,11 +33,11 @@ class PatientService:
         Raise LookupError if absent and ValueError for a blank/invalid ID.
         Do not create a replacement patient.
         """
+        if not isinstance(patient_id, str) or not patient_id.strip():
+            raise ValueError('Patient ID cannot be blank/invalid')
         patient = self.data_store.find_patient(patient_id)
-
         if patient is None:
             raise LookupError('Patient not found')
-
         return patient
 
 
@@ -72,11 +72,11 @@ class PractitionerService:
         Raise LookupError if absent and ValueError for a blank/invalid ID.
         Do not create a replacement practitioner.
         """
+        if not isinstance(practitioner_id, str) or not practitioner_id.strip():
+            raise ValueError('Practitioner ID cannot be blank/invalid')
         practitioner = self.data_store.find_practitioner(practitioner_id)
-
         if practitioner is None:
             raise LookupError('Practitioner not found')
-
         return practitioner
 
 
