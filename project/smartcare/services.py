@@ -153,11 +153,7 @@ class AppointmentService:
         transitions. Raise LookupError if the appointment does not exist.
         Return the same stored appointment object.
         """
-        appointment = self.data_store.find_appointment(appointment_id)
-
-        if appointment is None:
-            raise LookupError('Appointment not found')
-
+        appointment = self.find_appointment(appointment_id)
         appointment.cancel()
         return appointment
 
