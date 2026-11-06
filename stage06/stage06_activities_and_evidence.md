@@ -43,7 +43,7 @@ Return the registered patient or raise LookupError for absence and ValueError fo
 
 - **Scope:**
 
- (class method) 
+(class method) 
 
 - **Definition of Done:**
 
@@ -142,7 +142,7 @@ The response from Copilot in this instance does not provide any context for the 
 
 | Practice                            | Team agreement                                                                                                                                                              |
 |-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Branch naming                       | Use camelCase, short and descriptive, indicative of features they pertain to.                                                                                               |
+| Branch naming                       | Use hyphenated variable names, short and descriptive, indicative of features they pertain to.                                                                                               |
 | Commit message convention           | Max of ~60 characters when possible (prevents line being truncated on GitHub), describe the specific purpose of the commit, e.g.: “Fixed references to deprecated sections” |
 | PR size                             | Try to limit scope to only files that absolutely must be changed to implement or change a specific feature.                                                                 |
 | Another-member review requirement   | All code must be reviewed by at least 2 people (including the author) before being merged.                                                                                  |
@@ -155,68 +155,133 @@ The response from Copilot in this instance does not provide any context for the 
 
 Create at least two focused issues. Add a linked practitioner-lookup issue or an explicit supporting criterion with the tutor if needed to cover all three service targets.
 
-| Issue link | Requirement | Owner | Acceptance criteria or precise link | Status |
-|---|---|---|---|---|
-| [issue 1] | [response] | [response] | [response] | [response] |
-| [issue 2] | [response] | [response] | [response] | [response] |
+| Issue link | Requirement                                                                                                   | Owner                          | Acceptance criteria or precise link                                                                                                                                                                                                                                                                                           | Status |
+|------------|---------------------------------------------------------------------------------------------------------------|--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|
+| [issue 4]  | FR-02: Find patient by patient ID.                                                                            | Janel                          | Return the stored patient or raise LookupError for absence and ValueError for a blank/invalid ID.                                                                                                                                                                                                                             | Closed |
+| [issue 6]  | FR-02: Find patient by patient ID.                                                                            | Janel                          | Return the stored patient or raise LookupError for absence and ValueError for a blank/invalid ID.                                                                                                                                                                                                                             | Closed |
+| [issue 1]  | FR-06: Allow scheduled appointments to be cancelled, & FR-07: Cancelled appointments in the system’s history. | Jerald/Janel (revised version) | 1. Cancel a scheduled appointment and retain its history. 2. Return the cancelled object. 3. An unknown appointment ID raises LookupError. 4. A blank or invalid appointment ID raises ValueError. 5. Invalid transitions (repeated cancellation and cancellation from COMPLETED) raise ValueError and leave state unchanged. | Closed |
 
 ## G: Pull request evidence
 
 Repeat this block per PR. Record actual events, not planned approvals.
 
-- PR link and title: [response]
-- Linked issue and requirement: [response]
-- Feature branch: [response]
-- Changed behaviour: [response]
-- Meaningful commits: [links]
-- Test command, directory and observed result: [response]
-- Another-member reviewer: [response]
-- Human observations recorded before Copilot: [link and time]
-- Requirement, responsibilities, test assertions and unrelated-scope checks: [response]
-- Key feedback: [response]
-- Author response/change and verification: [response]
-- Reviewer recheck and approval: [link]
-- Merge outcome and SHA: [response]
-- Significant Copilot assistance: [summary or none]
-- Linked issue closure: [response]
-- Each member updated main: [member and confirmation]
-- Integrated verification after merge: [command, directory, result and code SHA]
+| PR link and title:                                                         | <a href="https://github.com/greatbanks/st1-assignment-3/pull/3">link:</a> Completed Stage 6 TODO: find_practitioner                                       |
+| Linked issue and requirement:                                              | <a href="https://github.com/greatbanks/st1-assignment-3/issues/4">link:</a> (FR-02) Find a patient by patient ID                                          |
+| Feature branch:                                                            | `feature/patient-lookup`                                                                                                                                  |
+| Changed behaviour:                                                         | from: NotImplementationError, to: captured requirements of the drafted issue                                                                              |
+| Meaningful commits:                                                        | <a href="https://github.com/greatbanks/st1-assignment-3/pull/3/changes/c0e01cfa89d3758f31a850639d8081d4a578d125">link</a>                                 |
+| Test command, directory and observed result:                               | `python main.py && python –m pytest`, `project/` , `8 passed [100%] - in green`                                                                           |
+| Another-member reviewer:                                                   | James reviewed and approved for feature implementation                                                                                                    |
+| Human observations recorded before Copilot:                                | N/A                                                                                                                                                       |
+| Requirement, responsibilities, test assertions and unrelated-scope checks: | N/A                                                                                                                                                       |
+| Key feedback:                                                              | N/A                                                                                                                                                       |
+| Author response/change and verification:                                   | N/A                                                                                                                                                       |
+| Reviewers recheck and approval:                                            | N/A                                                                                                                                                       |
+| Merge outcome and SHA:                                                     | Merged into main, c0e01cfa89d3758f31a850639d8081d4a578d125                                                                                                |
+| Significant Copilot assistance:                                            | Not used                                                                                                                                                  |
+| Linked issue closure:                                                      | <a href="https://github.com/greatbanks/st1-assignment-3/issues/4">link</a>                                                                                |
+| Each member updated main:                                                  | Confirmed                                                                                                                                                 |
+| Integrated verification after merge:                                       | Confirmed in main, James merged the feature to main through GitHub’s website, `project/smartcare/services.py`, `c0e01cfa89d3758f31a850639d8081d4a578d125` |
+
+| PR link and title:                                                         | <a href="https://github.com/greatbanks/st1-assignment-3/pull/5">link:</a> Completed Stage 6 TODO: find_practitioner                                                            |
+| Linked issue and requirement:                                              | Stage 6 document did not require drafting this issue, otherwise it follows <a href="https://github.com/greatbanks/st1-assignment-3/issues/6">find_patient's</a> drafted issue. |
+| Feature branch:                                                            | `feature/practitioner-lookup`                                                                                                                                                  |
+| Changed behaviour:                                                         | from: `NotImplementationError`, to: captured requirements of the drafted issue                                                                                                 |
+| Meaningful commits:                                                        | <a href="https://github.com/greatbanks/st1-assignment-3/pull/5/changes/76b55b181bb68a8817c88b301c8ad6ceedda6d9b">link</a>                                                      |
+| Test command, directory and observed result:                               | `python main.py && python –m pytest`, `project/` , `8 passed [100%] - in green`                                                                                                |
+| Another-member reviewer:                                                   | James reviewed and approved for feature implementation                                                                                                                         |
+| Human observations recorded before Copilot:                                | N/A                                                                                                                                                                            |
+| Requirement, responsibilities, test assertions and unrelated-scope checks: | N/A                                                                                                                                                                            |
+| Key feedback:                                                              | N/A                                                                                                                                                                            |
+| Author response/change and verification:                                   | N/A                                                                                                                                                                            |
+| Reviewers recheck and approval:                                            | N/A                                                                                                                                                                            |
+| Merge outcome and SHA:                                                     | Merged into main, `76b55b181bb68a8817c88b301c8ad6ceedda6d9b`                                                                                                                   |
+| Significant Copilot assistance:                                            | Not used                                                                                                                                                                       |
+| Linked issue closure:                                                      | Stage 6 document did not require drafting this issue, otherwise it follows <a href="https://github.com/greatbanks/st1-assignment-3/issues/6">find_patient's</a> drafted issue. |
+| Each member updated main:                                                  | Confirmed                                                                                                                                                                      |
+| Integrated verification after merge:                                       | Confirmed in main, James merged the feature to main through GitHub’s website, `project/smartcare/services.py`, `76b55b181bb68a8817c88b301c8ad6ceedda6d9b`                      |
+
+| PR link and title:                                                         | <a href="https://github.com/greatbanks/st1-assignment-3/pull/7">Link:</a> Appointment cancellation                                                            |
+| Linked issue and requirement:                                              | FR-06 Appointment Cancellation and FR-07 Retain History.                                                                                                      |
+| Feature branch:                                                            | `feature/appointment-cancellation`                                                                                                                            |
+| Changed behaviour:                                                         | AppointmentService.cancel_appointment() to allow scheduled appointments to be cancelled while retaining their history and updating their status to CANCELLED. |
+| Meaningful commits:                                                        | <a href="https://github.com/greatbanks/st1-assignment-3/pull/7/changes/a9e8add287a1751db4b52527eaec91ad173387ac">Link</a>                                     |
+| Test command, directory and observed result:                               | `python main.py && python –m pytest`, `project/` , `22 passed [100%] - in green`                                                                              |
+| Another-member reviewer:                                                   | Janel reviewed and refined implementation                                                                                                                     |
+| Human observations recorded before Copilot:                                | N/A                                                                                                                                                           |
+| Requirement, responsibilities, test assertions and unrelated-scope checks: | N/A                                                                                                                                                           |
+| Key feedback:                                                              | Reviewed the cancellation implementation and identified redundant logic in the Copilot suggestion.                                                            |
+| Author response/change and verification:                                   | N/A                                                                                                                                                           |
+| Reviewers recheck and approval:                                            | <a href="https://github.com/greatbanks/st1-assignment-3/pull/7">Link</a>                                                                                      |
+| Merge outcome and SHA:                                                     | Merged into main, `a9e8add287a1751db4b52527eaec91ad173387ac`                                                                                                  |
+| Significant Copilot assistance:                                            | Copilot suggested additional cancellation logic. We tested the suggestion and identified redundant behaviour, which was modified before being merged          |
+| Linked issue closure:                                                      | <a href="https://github.com/greatbanks/st1-assignment-3/pull/7">Link</a>                                                                                      |
+| Each member updated main:                                                  | Confirmed                                                                                                                                                     |
+| Integrated verification after merge:                                       | Confirmed in main, James merged the feature to main through GitHub’s website, `project/smartcare/services.py`, `a9e8add287a1751db4b52527eaec91ad173387ac`     |
 
 ## H: Copilot collaboration record
 
 Record meaningful required use, not every trivial completion. Repeat per significant interaction.
 
-- Member and task: [response]
-- Prompt/purpose and relevant issue/diff: [response]
-- Summary of output: [response]
-- Human check against actual code, requirements and tests: [response]
-- Decision — Accept / Modify / Reject: [select]
-- Reason: [response]
-- Verification/evidence: [link and result]
+| Member and task:                                         | Jerald - Implementing AppointmentService.cancel_appointment() for appointment cancellation and history retention                                                                                                                                                                                                                                                                  |
+| Prompt/purpose and relevant issue/diff:                  | Used Copilot to assist with the implementation as well as review appointment cancellation behaviour linked to FR-06 and FR-07. The aim was to ensure that only scheduled appointments can be cancelled and that all cancelled appointments remain in the systems history                                                                                                          |
+| Summary of output:                                       | Copilot assistance which related to the cancellation implementation as well as handling of validation and error cases.                                                                                                                                                                                                                                                            |
+| Human check against actual code, requirements and tests: | Tested Copilot's suggested approach against the existing implementation and requirements. Some of the suggested logic was redundant because the existing code already handled parts of the behaviour. This required reviewing the suggestion rather than adding duplicate logic as well as refining the implementation to keep it consistent with the existing project structure. |
+| Decision — Accept/ Modify/Reject:                        | Modify                                                                                                                                                                                                                                                                                                                                                                            |
+| Reason:                                                  | The redundant suggestion was not merged due to it causing conflict.                                                                                                                                                                                                                                                                                                                     |
+| Verification/evidence:                                   |  <br>[GitHub PR link](https://github.com/greatbanks/st1-assignment-3/pull/7) appointment cancellation implementation. <br>Test command: python -m pytest <br>Result: 22 passed in 0.03s (100%).                                                                                                                                                                                   |
 
 ## I: Human versus Copilot review comparison
 
-- Human reviewer noticed before consulting Copilot: [response]
-- Copilot noticed: [response]
-- Overlap: [response]
-- What did the human reviewer notice that Copilot did not: [response]
-- What did Copilot identify that the human reviewer initially missed: [response]
-- Unsupported or incorrect Copilot suggestion: [response or none identified with explanation]
-- Human judgement accepted, modified or rejected, and why: [response]
-- Which evidence justified merge approval: [response]
+| Human reviewer noticed before consulting Copilot:                   | Some cancellation and validation behaviour was already handled by the existing code. |
+| Copilot noticed:                                                    | Suggested additional cancellation and validation logic.                              |
+| Overlap:                                                            | Both considered cancellation behaviour and validation.                               |
+| What did the human reviewer notice that Copilot did not:            | The suggested logic duplicated existing functionality.                               |
+| What did Copilot identify that the human reviewer initially missed: | An alternative approach to handling validation scenarios.                            |
+| Unsupported or incorrect Copilot suggestion:                        | Some suggested logic was redundant.                                                  |
+| Human judgement accepted, modified or rejected, and why:            | Modified                                                                             |
+| Which evidence justified merge approval:                            | PR #7 and python -m pytest - 22 passed in 0.03s.                                     |
 
 ## J: Contributions
 
 Repeat per member. Include only categories that describe actual work; write not applicable where appropriate. Pairing or mentoring can be supported by a short corroborated note.
 
-- Member: [response]
-- Implementation: [work and evidence]
-- Testing: [work and evidence]
-- Review: [work and evidence]
-- Issue refinement: [work and evidence]
-- Design and responsibility discussion: [work and evidence]
-- Debugging or integration: [work and evidence]
-- Documentation or team support: [work and evidence]
+| 1.  James                             |                                                                                                                            |
+| ------------------------------------- |                                                                                                                            |
+| Member:                               | James                                                                                                                      |
+| Implementation:                       | Managed PRs and proofreading code                                                                                          |
+| Testing:                              | Confirmed pytest output before merging                                                                                     |
+| Review:                               | Proofreading code before merge                                                                                             |
+| Issue refinement:                     | Noted ValueError handling in closed PR                                                                                     |
+| Design and responsibility discussion: | No further input                                                                                                           |
+| Debugging or integration:             | No further input                                                                                                           |
+| Documentation or team support:        | Coordinating PRs, approvals, cancellations, repo management, writing responses and populating markdown file with responses |
+
+
+| 2.  Janel                             |                                                                                                                |
+| ------------------------------------- |                                                                                                                |
+| Member:                               | Janel                                                                                                          |
+| Implementation:                       | Passed pytest before pushing methods to branches:  <br>feature/patient-lookup <br>feature/practitioner\-lookup |
+| Testing:                              | Drafted lookup contract issue, developed lookup contract codes, proofreading other member’s code               |
+| Review:                               | Proofread cancellation contract’s issue draft and code.                                                        |
+| Issue refinement:                     | Edited cancellation contract’s issue draft, provided feedback for cancel_appointment().                        |
+| Design and responsibility discussion: | No further input                                                                                               |
+| Debugging or integration:             | No further input                                                                                               |
+| Documentation or team support:        | Communicated my PR’s, received support on GitHub knowledge, writing responses, and pulling.                    |
+
+
+| 3.  Jerald                            |
+| ------------------------------------- |
+| Member:                               | Jerald                                                                                                                                                  |
+| Implementation:                       | Implemented AppointmentService.cancel_appointment() for FR-06 and FR-07, allowing scheduled appointments to be cancelled while retaining their history. |
+| Testing:                              | Ran python main.py and python -m pytest. All 22 tests passed (100%)                                                                                     |
+| Review:                               | Reviewed the cancellation implementation and checked Copilot's suggestions against the existing code to identify redundant logic.                       |
+| Issue refinement:                     | Contributed to refining issue #1 by addressing cancellation rules, validation and error-handling requirements.                                          |
+| Design and responsibility discussion: | No further input                                                                                                                                        |
+| Debugging or integration:             | No further input                                                                                                                                        |
+| Documentation or team support:        | Contributed implementation and testing evidence with Copilot.                                                                                           |
+
+
 
 ## K: Exit question
 
@@ -270,25 +335,25 @@ Ensuring coherent group collaboration processes, transparency between all partie
 
 ## M: Completion and handover
 
-- Starting SHA: [response]
-- Final Stage 6 code SHA: [response]
-- Test command: [response]
-- Working directory: [response]
-- Observed result: [response]
-- PR and another-member reviewer: [links]
-- Unresolved issue or none: [response]
-- Stage 7 handover status: [ready for tutor checkpoint / unresolved work]
-- Final submitted SHA if later than tested SHA: [response and evidence-only difference]
+- Starting SHA: `567bac7ddcc11cea288d47efe423e35363a4d5ad`
+- Final Stage 6 code SHA: `76b55b181bb68a8817c88b301c8ad6ceedda6d9b`
+- Test command: `python -m test`
+- Working directory: `/project/smartcare/`
+- Observed result: All tests passed
+- PR and another-member reviewer: <a href="https://github.com/greatbanks/st1-assignment-3/pull/3">Link 1,</a> <a href="https://github.com/greatbanks/st1-assignment-3/pull/5">Link 2,</a> <a href="https://github.com/greatbanks/st1-assignment-3/pull/7">Link 3</a>
+- Unresolved issue or none: None
+- Stage 7 handover status: Ready to continue
+- Final submitted SHA if later than tested SHA: N/A
 
-- [ ] Three Stage 6 service targets completed and checked.
-- [ ] Original supplied tests retained and passing.
-- [ ] At least two focused issues link requirements and acceptance criteria.
-- [ ] Feature work reviewed by another member using the actual diff.
-- [ ] Human-first review and required Copilot comparison recorded.
-- [ ] Feedback resolved and approval recorded before merge.
-- [ ] Everyone pulled main and integrated checks passed.
-- [ ] Required activities, quiz responses and contribution notes completed.
-- [ ] Only synthetic data included; confidential peer material kept out.
-- [ ] Tutor can trace a requirement through issue, code, tests, PR and checkpoint.
+- [*] Three Stage 6 service targets completed and checked.
+- [*] Original supplied tests retained and passing.
+- [*] At least two focused issues link requirements and acceptance criteria.
+- [*] Feature work reviewed by another member using the actual diff.
+- [*] Human-first review and required Copilot comparison recorded.
+- [*] Feedback resolved and approval recorded before merge.
+- [*] Everyone pulled main and integrated checks passed.
+- [*] Required activities, quiz responses and contribution notes completed.
+- [*] Only synthetic data included; confidential peer material kept out.
+- [*] Tutor can trace a requirement through issue, code, tests, PR and checkpoint.
 
 Do not write a file's own future commit SHA into that file. Record the tested code SHA first, then commit the evidence; explain the difference when submitting.
