@@ -2,81 +2,82 @@
 
 Complete this one group record. Link actual issues, diffs, tests and reviews; avoid copying entire histories. Blank fields are intentional. Duplicate rows as needed. Use synthetic data only. Every member records their own meaningful contribution. Do not invent results, reviews or Copilot use.
 
-- Group/tutorial: 
+**Group/tutorial:**
 
 [Tuesday, 17:30]
 
-- Members, GitHub usernames and cohorts: 
+**Members, GitHub usernames and cohorts:** 
 
 | Members          | GitHub Usernames | Cohort             |
+| ---------------- | ---------------- | ------------------ |
 | Janel Alfaro     | JVA101           | UG, Online Group 1 |
 | James Greatbanks | greatbanks       | UG, Online Group 1 |
 | Jerald Charanjit | Jerald420        | UG, Online Group 1 |
 
-- Repository URL:
+**Repository URL:**
 
 https://github.com/greatbanks/st1-assignment-3
 
-- Starting SHA: 
+**Starting SHA:**
 
-2D8BE34BD18382C1E9FA4E5C4364330FAE5C593B52B3B9FCACD098EE2871E482
+`567bac7ddcc11cea288d47efe423e35363a4d5ad`
 
 ## A Requirement to issue activities
 
 ### FR-02 Patient Search
 
-- **Title:**
+**Title:**
 
 PatientService.find_patient feature to be built 
 
-- **Context:**
+**Context:**
 
 Currently have the python skeleton for the feature, but it has not been developed. 
 
-- **Requirement:**
+**Requirement:**
 
 (FR-02) Find a patient by patient ID.
 
-- **Acceptance criteria:**
+**Acceptance criteria:**
 
 Return the registered patient or raise LookupError for absence and ValueError for a blank/invalid ID.
 
-- **Scope:**
+**Scope:**
 
 (class method) 
 
-- **Definition of Done:**
+**Definition of Done:**
 
 Stage 6 instructions are followed, team member develops the feature, the feature is reviewed and then merged too main.
 
-- **Owner:**
+**Owner:**
 
 Janel
 
-- **Actual issue link:**
+**Actual issue link:**
 
 https://github.com/greatbanks/st1-assignment-3/issues/4
 
 ### FR-06 Appointment Cancellation with FR-07 retained history
 
-- **Title:**
+**Title:**
 
 AppointmentService.cancel_appointment  feature to be built
 
-- **Context:**
+**Context:**
 
 The SmartCare application currently provides the appointment domain model and a cancellation mechanism, but the AppointmentService.cancel_appointment feature has not yet been developed. 
 
-- **Requirement:**
+**Requirement:**
 
-**FR-06:** Cancel only a SCHEDULED appointment. 
+- **FR-06:** Cancel only a SCHEDULED appointment. 
 
-**FR-07:** Retain the same appointment with CANCELLED status in current-session history.  
+- **FR-07:** Retain the same appointment with CANCELLED status in current-session history.
 
-- **Acceptance criteria:**
+**Acceptance criteria:**
 
 1. Cancel through the domain method and retain the appointment. 
-2. Return the cancelled object.  
+2. Return the cancelled object. 
 3. An unknown appointment ID raises LookupError. 
 4. A blank or invalid appointment ID raises ValueError. 
 5. Invalid transitions (repeated cancellation and cancellation from COMPLETED) raise ValueError and leave state unchanged. 
@@ -100,7 +101,7 @@ https://github.com/greatbanks/st1-assignment-3/issues/1
 ## B: Commit quality
 
 | Original example                               | Strong or weak | Reason                                                                                                |
-| ---                                            | ---            | ---                                                                                                   |
+| ---------------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
 | changes                                        | Weak           | Ambiguous, does not provide any specific information about changes or features added/modified/removed |
 | final version                                  | Weak           | Provides no context to the version history, or the purpose of the commit                              |
 | Add patient search by ID                       | Strong         | Provides specific details about the feature added with no ambiguity                                   |
@@ -157,14 +158,16 @@ Create at least two focused issues. Add a linked practitioner-lookup issue or an
 
 | Issue link | Requirement                                                                                                   | Owner                          | Acceptance criteria or precise link                                                                                                                                                                                                                                                                                           | Status |
 |------------|---------------------------------------------------------------------------------------------------------------|--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|
-| [issue 4]  | FR-02: Find patient by patient ID.                                                                            | Janel                          | Return the stored patient or raise LookupError for absence and ValueError for a blank/invalid ID.                                                                                                                                                                                                                             | Closed |
-| [issue 6]  | FR-02: Find patient by patient ID.                                                                            | Janel                          | Return the stored patient or raise LookupError for absence and ValueError for a blank/invalid ID.                                                                                                                                                                                                                             | Closed |
-| [issue 1]  | FR-06: Allow scheduled appointments to be cancelled, & FR-07: Cancelled appointments in the system’s history. | Jerald/Janel (revised version) | 1. Cancel a scheduled appointment and retain its history. 2. Return the cancelled object. 3. An unknown appointment ID raises LookupError. 4. A blank or invalid appointment ID raises ValueError. 5. Invalid transitions (repeated cancellation and cancellation from COMPLETED) raise ValueError and leave state unchanged. | Closed |
+| [Issue 4](https://github.com/greatbanks/st1-assignment-3/issues/4)  | FR-02: Find patient by patient ID.                                                                            | Janel                          | Return the stored patient or raise LookupError for absence and ValueError for a blank/invalid ID.                                                                                                                                                                                                                             | Closed |
+| [Issue 6](https://github.com/greatbanks/st1-assignment-3/issues/6)  | FR-02: Find patient by patient ID.                                                                            | Janel                          | Return the stored patient or raise LookupError for absence and ValueError for a blank/invalid ID.                                                                                                                                                                                                                             | Closed |
+| [Issue 1](https://github.com/greatbanks/st1-assignment-3/issues/1)  | FR-06: Allow scheduled appointments to be cancelled, & FR-07: Cancelled appointments in the system’s history. | Jerald/Janel (revised version) | 1. Cancel a scheduled appointment and retain its history. 2. Return the cancelled object. 3. An unknown appointment ID raises LookupError. 4. A blank or invalid appointment ID raises ValueError. 5. Invalid transitions (repeated cancellation and cancellation from COMPLETED) raise ValueError and leave state unchanged. | Closed |
 
 ## G: Pull request evidence
 
 Repeat this block per PR. Record actual events, not planned approvals.
 
+| Field                                                                      | Response                                                                                                                                                  |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | PR link and title:                                                         | <a href="https://github.com/greatbanks/st1-assignment-3/pull/3">link:</a> Completed Stage 6 TODO: find_practitioner                                       |
 | Linked issue and requirement:                                              | <a href="https://github.com/greatbanks/st1-assignment-3/issues/4">link:</a> (FR-02) Find a patient by patient ID                                          |
 | Feature branch:                                                            | `feature/patient-lookup`                                                                                                                                  |
@@ -183,6 +186,8 @@ Repeat this block per PR. Record actual events, not planned approvals.
 | Each member updated main:                                                  | Confirmed                                                                                                                                                 |
 | Integrated verification after merge:                                       | Confirmed in main, James merged the feature to main through GitHub’s website, `project/smartcare/services.py`, `c0e01cfa89d3758f31a850639d8081d4a578d125` |
 
+| Field                                                                      | Response                                                                                                                                                                       |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | PR link and title:                                                         | <a href="https://github.com/greatbanks/st1-assignment-3/pull/5">link:</a> Completed Stage 6 TODO: find_practitioner                                                            |
 | Linked issue and requirement:                                              | Stage 6 document did not require drafting this issue, otherwise it follows <a href="https://github.com/greatbanks/st1-assignment-3/issues/6">find_patient's</a> drafted issue. |
 | Feature branch:                                                            | `feature/practitioner-lookup`                                                                                                                                                  |
@@ -201,6 +206,8 @@ Repeat this block per PR. Record actual events, not planned approvals.
 | Each member updated main:                                                  | Confirmed                                                                                                                                                                      |
 | Integrated verification after merge:                                       | Confirmed in main, James merged the feature to main through GitHub’s website, `project/smartcare/services.py`, `76b55b181bb68a8817c88b301c8ad6ceedda6d9b`                      |
 
+| Field                                                                      | Response                                                                                                                                                      |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | PR link and title:                                                         | <a href="https://github.com/greatbanks/st1-assignment-3/pull/7">Link:</a> Appointment cancellation                                                            |
 | Linked issue and requirement:                                              | FR-06 Appointment Cancellation and FR-07 Retain History.                                                                                                      |
 | Feature branch:                                                            | `feature/appointment-cancellation`                                                                                                                            |
@@ -224,15 +231,18 @@ Repeat this block per PR. Record actual events, not planned approvals.
 Record meaningful required use, not every trivial completion. Repeat per significant interaction.
 
 | Member and task:                                         | Jerald - Implementing AppointmentService.cancel_appointment() for appointment cancellation and history retention                                                                                                                                                                                                                                                                  |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Prompt/purpose and relevant issue/diff:                  | Used Copilot to assist with the implementation as well as review appointment cancellation behaviour linked to FR-06 and FR-07. The aim was to ensure that only scheduled appointments can be cancelled and that all cancelled appointments remain in the systems history                                                                                                          |
 | Summary of output:                                       | Copilot assistance which related to the cancellation implementation as well as handling of validation and error cases.                                                                                                                                                                                                                                                            |
 | Human check against actual code, requirements and tests: | Tested Copilot's suggested approach against the existing implementation and requirements. Some of the suggested logic was redundant because the existing code already handled parts of the behaviour. This required reviewing the suggestion rather than adding duplicate logic as well as refining the implementation to keep it consistent with the existing project structure. |
-| Decision — Accept/ Modify/Reject:                        | Modify                                                                                                                                                                                                                                                                                                                                                                            |
-| Reason:                                                  | The redundant suggestion was not merged due to it causing conflict.                                                                                                                                                                                                                                                                                                                     |
-| Verification/evidence:                                   |  <br>[GitHub PR link](https://github.com/greatbanks/st1-assignment-3/pull/7) appointment cancellation implementation. <br>Test command: python -m pytest <br>Result: 22 passed in 0.03s (100%).                                                                                                                                                                                   |
+| Decision — Accept/ Modify/Reject:                       | Modify                                                                                                                                                                                                                                                                                                                                                                            |
+| Reason:                                                  | The redundant suggestion was not merged due to it causing conflict.                                                                                                                                                                                                                                                                                                               |
+| Verification/evidence:                                   | <br>[GitHub PR link](https://github.com/greatbanks/st1-assignment-3/pull/7) appointment cancellation implementation. <br>Test command: python -m pytest <br>Result: 22 passed in 0.03s (100%).                                                                                                                                                                                   |
 
 ## I: Human versus Copilot review comparison
 
+| Field                                                               | Response                                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | Human reviewer noticed before consulting Copilot:                   | Some cancellation and validation behaviour was already handled by the existing code. |
 | Copilot noticed:                                                    | Suggested additional cancellation and validation logic.                              |
 | Overlap:                                                            | Both considered cancellation behaviour and validation.                               |
@@ -240,15 +250,14 @@ Record meaningful required use, not every trivial completion. Repeat per signifi
 | What did Copilot identify that the human reviewer initially missed: | An alternative approach to handling validation scenarios.                            |
 | Unsupported or incorrect Copilot suggestion:                        | Some suggested logic was redundant.                                                  |
 | Human judgement accepted, modified or rejected, and why:            | Modified                                                                             |
-| Which evidence justified merge approval:                            | PR #7 and python -m pytest - 22 passed in 0.03s.                                     |
+| Which evidence justified merge approval:                            | PR #7 and `python -m pytest`: 22 passed in 0.03s.                                    |
 
 ## J: Contributions
 
 Repeat per member. Include only categories that describe actual work; write not applicable where appropriate. Pairing or mentoring can be supported by a short corroborated note.
 
-| 1.  James                             |                                                                                                                            |
-| ------------------------------------- |                                                                                                                            |
 | Member:                               | James                                                                                                                      |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | Implementation:                       | Managed PRs and proofreading code                                                                                          |
 | Testing:                              | Confirmed pytest output before merging                                                                                     |
 | Review:                               | Proofreading code before merge                                                                                             |
@@ -258,9 +267,8 @@ Repeat per member. Include only categories that describe actual work; write not 
 | Documentation or team support:        | Coordinating PRs, approvals, cancellations, repo management, writing responses and populating markdown file with responses |
 
 
-| 2.  Janel                             |                                                                                                                |
-| ------------------------------------- |                                                                                                                |
 | Member:                               | Janel                                                                                                          |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | Implementation:                       | Passed pytest before pushing methods to branches:  <br>feature/patient-lookup <br>feature/practitioner\-lookup |
 | Testing:                              | Drafted lookup contract issue, developed lookup contract codes, proofreading other member’s code               |
 | Review:                               | Proofread cancellation contract’s issue draft and code.                                                        |
@@ -270,9 +278,8 @@ Repeat per member. Include only categories that describe actual work; write not 
 | Documentation or team support:        | Communicated my PR’s, received support on GitHub knowledge, writing responses, and pulling.                    |
 
 
-| 3.  Jerald                            |
-| ------------------------------------- |
 | Member:                               | Jerald                                                                                                                                                  |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Implementation:                       | Implemented AppointmentService.cancel_appointment() for FR-06 and FR-07, allowing scheduled appointments to be cancelled while retaining their history. |
 | Testing:                              | Ran python main.py and python -m pytest. All 22 tests passed (100%)                                                                                     |
 | Review:                               | Reviewed the cancellation implementation and checked Copilot's suggestions against the existing code to identify redundant logic.                       |
@@ -293,43 +300,43 @@ A high commit count has 0 correlation with strong contribution. A commit can be 
 
 ## L: Stage 6 formative questions
 
-1. What is version control?
+**1. What is version control?**
 
 A means by which software development can be managed, keeping records of previous software versions, individual feature implementations, facilitating collaboration, and allowing rollbacks to previous versions.
 
-2. Why is a feature branch useful?
+**2. Why is a feature branch useful?**
 
 Allows development or maintenance of a specific feature that may impact other parts of the software to stay isolated from the main repository, then merged when it has been tested and verified as functional.
 
-3. What makes a commit a good engineering commit?
+**3. What makes a commit a good engineering commit?**
 
 Descriptive and succint language, with any ambiguities or complex functionalities explained either in the commit message, or in comments/discussions related to the feature(s).
 
-4. What is a pull request?
+**4. What is a pull request?**
 
 Requests for a specific feature (or files) to be merged into a repository.
 
-5. What is the purpose of code review?
+**5. What is the purpose of code review?**
 
 To catch potential bugs or logic that may cause issues with other aspects of the program, or with future features.
 
-6. What does a Git diff show?
+**6. What does a Git diff show?**
 
 The difference between the content of two files, including deletions and additions.
 
-7. What is a Definition of Done?
+**7. What is a Definition of Done?**
 
 A self-defined set of criteria that, when met, assures the feature is completed.
 
-8. What is the appropriate role of GitHub Copilot in pull-request review?
+**8. What is the appropriate role of GitHub Copilot in pull-request review?**
 
 Identifying clerical errors, conflicts of interest within the repository, unforeseen issues.
 
-9. Why should individual contribution not be judged only by commit count?
+**9. Why should individual contribution not be judged only by commit count?**
 
 Commits can be any length - a member of a group who only corrects spelling mistakes in files with no software relevance (e.g. a README) could have the highest commit count on a project. The number has no direct correlation with the amount of work performed on any given task.
 
-10. What is the Stage 6 engineering rule?
+**10. What is the Stage 6 engineering rule?**
 
 Ensuring coherent group collaboration processes, transparency between all parties, and maintaining a sensible approach to using version control and Git + GitHub to facilitate collaboration.
 
@@ -344,6 +351,8 @@ Ensuring coherent group collaboration processes, transparency between all partie
 - Unresolved issue or none: None
 - Stage 7 handover status: Ready to continue
 - Final submitted SHA if later than tested SHA: N/A
+
+<br>
 
 - [*] Three Stage 6 service targets completed and checked.
 - [*] Original supplied tests retained and passing.
