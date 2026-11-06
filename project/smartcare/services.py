@@ -1,6 +1,5 @@
 """Simple workflows using a shared SmartCareDataStore object."""
 
-
 from datetime import datetime
 
 from smartcare.data_store import SmartCareDataStore
@@ -29,11 +28,10 @@ class PatientService:
         return patient
 
     def find_patient(self, patient_id: str) -> Patient:
-        """Stage 6 TODO: return the stored patient for a valid patient ID.
+        """Return the stored patient for a valid patient ID.
 
-        Completion must raise LookupError for absence and ValueError for
-        a blank/invalid ID. It must not create a replacement patient.
-        The starter deliberately raises NotImplementedError.
+        Raise LookupError if absent and ValueError for a blank/invalid ID.
+        Do not create a replacement patient.
         """
         if not isinstance(patient_id, str) or not patient_id.strip():
             raise ValueError('Patient ID cannot be blank/invalid')
@@ -69,12 +67,10 @@ class PractitionerService:
         return practitioner
 
     def find_practitioner(self, practitioner_id: str) -> Practitioner:
-        """Stage 6 TODO: return the stored practitioner for a valid ID.
+        """Return the stored practitioner for a valid ID.
 
-        Completion must raise LookupError for absence and ValueError for
-        a blank/invalid ID. It must not create a replacement
-        practitioner. The starter deliberately raises
-        NotImplementedError.
+        Raise LookupError if absent and ValueError for a blank/invalid ID.
+        Do not create a replacement practitioner.
         """
         if not isinstance(practitioner_id, str) or not practitioner_id.strip():
             raise ValueError('Practitioner ID cannot be blank/invalid')
@@ -107,20 +103,25 @@ class AppointmentService:
         """
         patient = self.data_store.find_patient(patient_id)
         practitioner = self.data_store.find_practitioner(practitioner_id)
+
         if patient is None:
             raise LookupError('Patient not found')
+
         if practitioner is None:
             raise LookupError('Practitioner not found')
+
         appointment = Appointment(
             appointment_id,
             patient,
             practitioner,
             date_time,
         )
+
         if self.data_store.find_appointment(
             appointment.appointment_id,
         ) is not None:
             raise ValueError('Appointment ID already exists')
+
         if self.data_store.has_practitioner_conflict(
             practitioner.practitioner_id,
             date_time,
@@ -128,6 +129,7 @@ class AppointmentService:
             raise ValueError(
                 'Practitioner already has a SCHEDULED appointment at this time',
             )
+
         self.data_store.add_appointment(appointment)
         return appointment
 
@@ -138,18 +140,22 @@ class AppointmentService:
         records.
         """
         appointment = self.data_store.find_appointment(appointment_id)
+
         if appointment is None:
             raise LookupError('Appointment not found')
+
         return appointment
 
     def cancel_appointment(self, appointment_id: str) -> Appointment:
-        """Stage 6: cancel through the domain method and retain the
-        appointment.
+        """Cancel a scheduled appointment and retain its history.
 
-        Return the cancelled object. Unknown IDs raise LookupError;
-        invalid transitions raise ValueError and leave state unchanged.
+        Raise ValueError for blank or invalid IDs and illegal status
+        transitions. Raise LookupError if the appointment does not exist.
+        Return the same stored appointment object.
         """
-        raise NotImplementedError('Stage 6: appointment cancellation')
+        appointment = self.find_appointment(appointment_id)
+        appointment.cancel()
+        return appointment
 
     def list_practitioner_appointments(
         self,
