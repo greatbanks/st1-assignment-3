@@ -12,12 +12,12 @@ All Assignment 3 stage materials are provided from the beginning. Complete this 
 
 For each requirement, propose one positive test, one negative test and the key assertion.
 
-| Requirement | Positive test | Negative test | Key assertion |
-|---|---|---|---|
-| FR-01 Register patient | [response] | [response] | [response] |
-| FR-05 Prevent practitioner conflict | [response] | [response] | [response] |
-| FR-06 Cancel appointment | [response] | [response] | [response] |
-| FR-07 Retain cancelled history | [response] | [response] | [response] |
+| Requirement                         | Positive test | Negative test | Key assertion |
+| ----------------------------------- | ------------- | ------------- | ------------- |
+| FR-01 Register patient              |               |               |               |
+| FR-05 Prevent practitioner conflict |               |               |               |
+| FR-06 Cancel appointment            |               |               |               |
+| FR-07 Retain cancelled history      |               |               |               |
 
 ### Activity 2 Strong or weak assertion
 
@@ -43,17 +43,21 @@ Judgement: [Strong for stated behaviour / Weak/unclear]  Why: [response]
 Design boundary or edge cases for blank identifiers, whitespace-only names, same-time practitioner bookings, cancelled appointments and invalid status transitions.
 For each input/state, expected result and supporting contract: [response]
 
+| Input | State | Expected result | Supporting contract |
+|-------|-------|-----------------|---------------------|
+|       |       |                 |                     |
+
 ### Activity 4 Critique GitHub Copilot tests
 
 GitHub Copilot generates five tests, all of which pass. Two only assert that objects are not None, one asserts True, and two assume SMS notifications exist. Identify what is wrong and rewrite the test intentions.
 
 | Candidate | What is wrong | Rewritten test intention |
-|---|---|---|
-| 1 | [response] | [response] |
-| 2 | [response] | [response] |
-| 3 | [response] | [response] |
-| 4 | [response] | [response] |
-| 5 | [response] | [response] |
+| --------- | ------------- | ------------------------ |
+| 1         |               |                          |
+| 2         |               |                          |
+| 3         |               |                          |
+| 4         |               |                          |
+| 5         |               |                          |
 
 ### Tutorial exit question
 
@@ -65,69 +69,86 @@ Why can 100% code coverage coexist with poor software verification?
 Assign TEST IDs before implementation or generation. Use canonical AC IDs with their actual meaning; quote supporting revision 2 contracts when no canonical AC is assigned. Blank-ID validation is not AC-01.2. Identify supplied versus student-authored evidence.
 
 | Requirement | Acceptance criterion | Test ID | Test type | Test name / location | Expected behaviour | Result / observed status | Supplied or student-authored |
-|---|---|---|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] | [complete] | [complete] | [complete] |
+| ----------- | -------------------- | ------- | --------- | -------------------- | ------------------ | ------------------------ | ---------------------------- |
+|             |                      |         |           |                      |                    |                          |                              |
+|             |                      |         |           |                      |                    |                          |                              |
+|             |                      |         |           |                      |                    |                          |                              |
 
 ## C Test Design
 
-Use descriptive test names such as test_cancel_changes_status() or test_blank_patient_id_is_rejected(). Explain what new evidence each case adds.
+Use descriptive test names such as `test_cancel_changes_status()` or `test_blank_patient_id_is_rejected()`. Explain what new evidence each case adds.
 
 | Test ID | Requirement | Acceptance criterion | Positive / Negative / Boundary | Test intention | Observable result expected | Added evidence beyond supplied tests |
-|---|---|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] | [complete] | [complete] |
+| ------- | ----------- | -------------------- | ------------------------------ | -------------- | -------------------------- | ------------------------------------ |
+|         |             |                      |                                |                |                            |                                      |
+|         |             |                      |                                |                |                            |                                      |
+|         |             |                      |                                |                |                            |                                      |
 
 ## D Arrange Act Assert Record
 
 Arrange test data; act on one meaningful behaviour; assert the required observable outcome. Use the specific current exception with pytest.raises where needed.
 
 | Test ID | Arrange | Act | Assert | Why meaningful / why assertion proves criterion |
-|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] |
+| ------- | ------- | --- | ------ | ----------------------------------------------- |
+|         |         |     |        |                                                 |
+|         |         |     |        |                                                 |
+|         |         |     |        |                                                 |
 
 ## E Domain Test Evidence
 
 Cover Patient/Practitioner construction and validation; Appointment construction, initial status, cancellation and illegal/repeated transitions. Preserve the four reference intentions described in handout Part C.
 
 | Test ID | Behaviour | Test file/function | Result |
-|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] |
+| ------- | --------- | ------------------ | ------ |
+|         |           |                    |        |
+|         |           |                    |        |
+|         |           |                    |        |
 
 ## F Service Test Evidence
 
 Use fresh shared SmartCareDataStore state, registered objects and completed Stage 6 services.
 
 | Test ID | Behaviour | Requirement / criterion | Test file/function | Result |
-|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] |
+| ------- | --------- | ----------------------- | ------------------ | ------ |
+|         |           |                         |                    |        |
+|         |           |                         |                    |        |
+|         |           |                         |                    |        |
 
 ## G Negative and Boundary Cases
 
 Connect cases to actual contracts and verify unchanged state after rejection.
 
 | Behaviour | Boundary/invalid input | Expected result | Test ID |
-|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] |
+| --------- | ---------------------- | --------------- | ------- |
+|           |                        |                 |         |
+|           |                        |                 |         |
+|           |                        |                 |         |
 
 ## H GitHub Copilot Test Design
 
 Select ONE real acceptance criterion. Complete human-first fields before using Copilot. Do not require an accepted generated test.
 
-Requirement: [complete]
-Acceptance criterion: [quote]
-Behaviour to test: [complete]
-Human-first test idea/categories: [complete]
-Prompt and purpose: [complete or link]
+| Prompt                           | Response           |
+| -------------------------------- | ------------------ |
+| Requirement                      | [complete]         |
+| Acceptance criterion             | [quote]            |
+| Behaviour to test                | [complete]         |
+| Human-first test idea/categories | [complete]         |
+| Prompt and purpose               | [complete or link] |
 
 For each significant candidate, copy this entry as needed:
-- Copilot test idea/candidate: [complete]
-- What it claims to verify: [complete]
-- Requirement trace: [complete]
-- Assertion quality: [complete]
-- Human critique: [complete]
-- Decision: [Accept / Modify / Reject]
-- Reason: [complete]
-- Final test reference if accepted/modified: [link or not retained]
-- Actual verification result: [complete; do not claim an unrun test passed]
+
+| Prompt                                    | Response                                      |
+| ----------------------------------------- | --------------------------------------------- |
+| Copilot test idea/candidate               | [complete]                                    |
+| What it claims to verify                  | [complete]                                    |
+| Requirement trace                         | [complete]                                    |
+| Assertion quality                         | [complete]                                    | 
+| Human critique                            | [complete]                                    |
+| Decision                                  | [accept / modify / reject]                    |
+| Reason                                    | [complete]                                    |
+| Final test reference if accepted/modified | [link or not retained]                        |
+| Actual verification result                | [complete; do not claim an unrun test passed] |
 
 Before accepting: traces to a requirement/criterion; can fail for the right reason; assertion checks required behaviour; no invented business rule; no unnecessary private implementation dependence. Reject/modify weak assertions, invented requirements, excessive mocking, duplicates, wrong exceptions, obsolete architecture and unnecessary dependencies.
 
@@ -142,9 +163,11 @@ Accepted / modified / rejected test decisions and evidence: [link actual decisio
 
 Run python -m pytest from project/. Retain all accumulated tests. Record the tested SHA accurately.
 
-| Command | Working directory | Code SHA | Passed | Failed | Failure summary | Product defect / test defect / unresolved | Evidence and interpretation |
-|---|---|---|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] | [complete] | [complete] | [complete] |
+| Command    | Working directory | Code SHA   | Passed     | Failed     | Failure summary | Product defect / test defect / unresolved | Evidence and interpretation |
+| ---------- | ----------------- | ---------- | ---------- | ---------- | --------------- | ----------------------------------------- | --------------------------- |
+|            |                   |            |            |            |                 |                                           |                             |
+|            |                   |            |            |            |                 |                                           |                             |
+|            |                   |            |            |            |                 |                                           |                             |
 
 Individual test runs and changed-order independence evidence: [commands, results, links]
 Optional tutor-led demonstration notes: [optional; leave blank if not used]
@@ -162,17 +185,21 @@ Optional fixtures/parametrisation used and why, if any: [response or not used]
 
 Use links rather than copying GitHub history. Continue the Stage 6 workflow; no commit/PR count, conflict or individual test quota is imposed.
 
-| Issue/task | Branch | PR | Reviewer | Key feedback | Outcome |
-|---|---|---|---|---|---|
-| [complete] | [complete] | [complete] | [complete] | [complete] | [complete] |
+| Issue/task | Branch     | PR         | Reviewer   | Key feedback | Outcome    |
+| ---------- | ---------- | ---------- | ---------- | ------------ | ---------- |
+|            |            |            |            |              |            |
+|            |            |            |            |              |            |
+|            |            |            |            |              |            |
 
 ## M Contribution Evidence
 
 Record actual work in test design, implementation, review, traceability, diagnosis, necessary fixes and integration. Do not include confidential peer ratings.
 
-| Member | Actual contribution | Evidence link |
-|---|---|---|
-| [complete] | [complete] | [complete] |
+| Member     | Actual contribution | Evidence link |
+| ---------- | ------------------- | ------------- |
+|            |                     |               |
+|            |                     |               |
+|            |                     |               |
 
 ## N Formative Questions
 
