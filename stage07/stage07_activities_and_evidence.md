@@ -136,34 +136,88 @@ Select ONE real acceptance criterion. Complete human-first fields before using C
 
 | Prompt                           | Response           |
 | -------------------------------- | ------------------ |
-| Requirement                      | [complete]         |
-| Acceptance criterion             | [quote]            |
-| Behaviour to test                | [complete]         |
-| Human-first test idea/categories | [complete]         |
-| Prompt and purpose               | [complete or link] |
+| Requirement                      | Cancel only a Scheduled Appointment. Any invalid transitions such as repeated cancellationsmust raise ValueError and leave the state unchanged.                          |
+| Acceptance criterion             |AC-05.1 — "Repeat cancellation is rejected."|
+| Behaviour to test                |If an appointment has already been cancelled, attempting to cancel it again must be rejected. The appointment must remain in the CANCELLED state.|
+| Human-first test idea/categories | Arranging a valid scheduled appointment. Cancel once successfully. Attempt to cancel the same appointment again. Check the second attempt will raise ValueError and the appointment stays as CANCELLED. This is a negative and invalid state-transition test.      |
+| Prompt and purpose               |Ask Github Copilot to suggest pytest cases for repeated appointment cancellation by using the existing Smartcare implementation and public contracts.The purpose is to indentify and critically assess useful tests and whether they verify the actual requirements. |
 
 For each significant candidate, copy this entry as needed:
 
 | Prompt                                    | Response                                      |
 | ----------------------------------------- | --------------------------------------------- |
-| Copilot test idea/candidate               | [complete]                                    |
-| What it claims to verify                  | [complete]                                    |
-| Requirement trace                         | [complete]                                    |
-| Assertion quality                         | [complete]                                    | 
-| Human critique                            | [complete]                                    |
-| Decision                                  | [accept / modify / reject]                    |
-| Reason                                    | [complete]                                    |
-| Final test reference if accepted/modified | [link or not retained]                        |
-| Actual verification result                | [complete; do not claim an unrun test passed] |
+| Copilot test idea/candidate               | Verify that a scheduled appointment can be cancelled.                   |
+| What it claims to verify                  |A scheduled appointment transitions to CANCELLED.                          |
+| Requirement trace                         |FR-06, but this mainly tests the successful cancellation criterion, not AC-05.3.|
+| Assertion quality                         |Checking appointment.status == AppointmentStatus.CANCELLED is meaningful and observable.                                    | 
+| Human critique                            | Valid test idea, but it does not test repeated cancellation. |
+| Decision                                  |Reject as a separate AC-05.3 candidate.|
+| Reason                                    |It duplicates the successful cancellation behaviour rather than testing rejection of a second cancellation.|
+| Final test reference if accepted/modified |Not retained separately.|
+| Actual verification result                |Not executed|
+
+| Prompt                                    | Response                                      |
+| ----------------------------------------- | --------------------------------------------- |
+| Copilot test idea/candidate               | Cancel an appointment once, then attempt cancellation again and expect ValueError.|
+| What it claims to verify                  |Repeated cancellation is rejected.|
+| Requirement trace                         |	FR-06, AC-05.3.|
+| Assertion quality                         |pytest.raises(ValueError) checks the expected exception type.| 
+| Human critique                            |This directly tests the acceptance criterion. The test should use the public Appointment.cancel() method and a valid appointment setup.|
+| Decision                                  |Modify|
+| Reason                                    |Keep this test, but combine it with Candidate 3 to also verify that the appointment's state remains CANCELLED.|
+| Final test reference if accepted/modified |To be added if the modified test is implemented.|
+| Actual verification result                |Not executed|
+
+| Prompt                                    | Response                                      |
+| ----------------------------------------- | --------------------------------------------- |
+| Copilot test idea/candidate               | Check that the appointment remains CANCELLED after the second cancellation attempt is rejected.|
+| What it claims to verify                  |An invalid repeated cancellation does not change the appointment's state.|
+| Requirement trace                         |FR-06, AC-05.3|
+| Assertion quality                         |Checking the public status property is an observable assertion| 
+| Human critique                            |Strong assertion, but it overlaps with Candidate 2 and should be included in the same test rather than duplicated.|
+| Decision                                  |Modify|
+| Reason                                    |Combine with Candidate 2 to verify both rejection and unchanged state in one test.|
+| Final test reference if accepted/modified |To be added if the modified test is implemented.|
+| Actual verification result                |Not executed|
+
+| Prompt                                    | Response                                      |
+| ----------------------------------------- | --------------------------------------------- |
+| Copilot test idea/candidate               |Test repeated cancellation through the shared SmartCareDataStore and retrieve the appointment afterwards.|
+| What it claims to verify                  |The appointment remains stored and cancelled after a rejected second attempt.|
+| Requirement trace                         |FR-06, AC-05.3|
+| Assertion quality                         |Checking the stored appointment's status is useful. Checking object identity is less important to the acceptance criterion.| 
+| Human critique                            |checking the stored record is useful, but Copilot's code calls store.cancel_appointment(), which is not a method on SmartCareDataStore. It also uses incorrect constructor arguments and does not register its patient and practitioner before adding the appointment.|
+| Decision                                  |Reject as written.|
+| Reason                                    |The generated code does not match the actual public API and would fail before testing the intended behaviour.|
+| Final test reference if accepted/modified |Not retained.|
+| Actual verification result                |Not executed|
+
 
 Before accepting: traces to a requirement/criterion; can fail for the right reason; assertion checks required behaviour; no invented business rule; no unnecessary private implementation dependence. Reject/modify weak assertions, invented requirements, excessive mocking, duplicates, wrong exceptions, obsolete architecture and unnecessary dependencies.
 
 ## I Weak Copilot Test Reflection
 
-Which Copilot-generated test looked convincing but was weak? [response]
-Why was it weak? [response]
-How did you strengthen it? [response]
-Accepted / modified / rejected test decisions and evidence: [link actual decisions in H]
+Which Copilot-generated test looked convincing but was weak? 
+
+Candidate 4 - the store-level repeated cancellation test: looked convincing because it attempted to test cancellation through the shared SmartCareDataStore and retrieve the appointment afterwards.
+
+Why was it weak? 
+
+code used store.cancel_appointment(), which does not match the actual SmartCareDataStore public API. Also contained incorrect constructor arguments and incomplete setup for the appointment. Therefore, the test would not reliably reach the behaviour it was intended to verify.
+
+How did you strengthen it? 
+
+retained the idea of checking observable appointment state, but focused the test on the public Appointment.cancel() method. The improved test performs an initial cancellation, checks that a second cancellation raises ValueError, and verifies that the appointment remains in the CANCELLED state.
+
+Candidate 1: Rejected- tests successful cancellation rather than repeated cancellation.
+
+Candidate 2: Modified-retained the ValueError assertion.
+
+Candidate 3: Modified- combined the unchanged-state assertion with Candidate 2.
+
+Candidate 4: Rejected- uses an incorrect API and invalid setup.
+
+See the individual candidate evaluations in Section H. No generated test was claimed as executed.
 
 ## J Regression Run
 
