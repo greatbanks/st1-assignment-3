@@ -32,7 +32,7 @@ PatientService.find_patient feature to be built
 
 **Context:**
 
-Currently have the python skeleton for the feature, but it has not been developed. 
+Currently, have the python skeleton for the feature, but it has not been developed. 
 
 **Requirement:**
 
@@ -231,11 +231,11 @@ Repeat this block per PR. Record actual events, not planned approvals.
 Record meaningful required use, not every trivial completion. Repeat per significant interaction.
 
 | Member and task:                                         | Jerald - Implementing AppointmentService.cancel_appointment() for appointment cancellation and history retention                                                                                                                                                                                                                                                                  |
-| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------------------------------------------| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Prompt/purpose and relevant issue/diff:                  | Used Copilot to assist with the implementation as well as review appointment cancellation behaviour linked to FR-06 and FR-07. The aim was to ensure that only scheduled appointments can be cancelled and that all cancelled appointments remain in the systems history                                                                                                          |
 | Summary of output:                                       | Copilot assistance which related to the cancellation implementation as well as handling of validation and error cases.                                                                                                                                                                                                                                                            |
 | Human check against actual code, requirements and tests: | Tested Copilot's suggested approach against the existing implementation and requirements. Some of the suggested logic was redundant because the existing code already handled parts of the behaviour. This required reviewing the suggestion rather than adding duplicate logic as well as refining the implementation to keep it consistent with the existing project structure. |
-| Decision — Accept/ Modify/Reject:                       | Modify                                                                                                                                                                                                                                                                                                                                                                            |
+| Decision — Accept/ Modify/Reject:                        | Modify                                                                                                                                                                                                                                                                                                                                                                            |
 | Reason:                                                  | The redundant suggestion was not merged due to it causing conflict.                                                                                                                                                                                                                                                                                                               |
 | Verification/evidence:                                   | <br>[GitHub PR link](https://github.com/greatbanks/st1-assignment-3/pull/7) appointment cancellation implementation. <br>Test command: python -m pytest <br>Result: 22 passed in 0.03s (100%).                                                                                                                                                                                   |
 
@@ -267,15 +267,15 @@ Repeat per member. Include only categories that describe actual work; write not 
 | Documentation or team support:        | Coordinating PRs, approvals, cancellations, repo management, writing responses and populating markdown file with responses |
 
 
-| Member:                               | Janel                                                                                                          |
-| ------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Implementation:                       | Passed pytest before pushing methods to branches:  <br>feature/patient-lookup <br>feature/practitioner\-lookup |
-| Testing:                              | Proofread cancellation contract’s issue draft and code.                                                        |
-| Review:                               | Drafted lookup contract issue, developed lookup contract codes, proofreading other member's code               | 
-| Issue refinement:                     | Edited cancellation contract’s issue draft, provided feedback for cancel_appointment().                        |
-| Design and responsibility discussion: | No further input                                                                                               |
-| Debugging or integration:             | No further input                                                                                               |
-| Documentation or team support:        | Communicated my PR’s, received support on GitHub knowledge, writing responses, and pulling.                    |
+| Member:                               | Janel                                                                                                                           |
+|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| Implementation:                       | Implemented look up contracts. Created lookup contract issue, developed lookup contract codes, proofreading other member’s code |
+| Testing:                              | Passed pytest before pushing methods to branches: feature/patient-lookup and feature/practitioner-lookup                        |
+| Review:                               | Proofread cancellation contract’s issue draft and code.                                                                         | 
+| Issue refinement:                     | Edited cancellation contract’s issue draft, provided feedback for cancel_appointment().                                         |
+| Design and responsibility discussion: | No further input                                                                                                                |
+| Debugging or integration:             | No further input                                                                                                                |
+| Documentation or team support:        | Communicated my PR’s, received support on GitHub knowledge, writing responses, and pulling.                                     |
 
 
 | Member:                               | Jerald                                                                                                                                                  |
