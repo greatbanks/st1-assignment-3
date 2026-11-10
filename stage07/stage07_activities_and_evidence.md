@@ -72,13 +72,15 @@ It’s possible to create a test that spans the whole program and asserts one th
 
 Assign TEST IDs before implementation or generation. Use canonical AC IDs with their actual meaning; quote supporting revision 2 contracts when no canonical AC is assigned. Blank-ID validation is not AC-01.2. Identify supplied versus student-authored evidence.
 
-| Requirement                                                                                        | Acceptance criterion | Test ID                                                           | Test type | Test name / location                | Expected behaviour                                                                                                                                             | Result / observed status | Supplied or student-authored |
-|----------------------------------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------|-----------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|------------------------------|
-| Valid required patient data with an unused ID is stored                                            | AC-01.1              | `test_patient_data_retained_while_id_unused()`                    | Positive  | project/tests/test_services.py      | When valid patient data is submitted with an unused ID, the data is stored regardless and is accessible                                                        | [results]                | Supplied                     |
-| Registration with an existing patient ID is rejected                                               | AC-01.2              | `test_disallow_duplicate_id_on_registration()`                    | Negative  | project/tests/test_services.py      | Registration attempt with duplicate ID is rejected                                                                                                             | [results]                | Supplied                     |
-| Same practitioner/exact time/scheduled conflicts; another practitioner at the same time is allowed | AC-04.1 & AC-04.2    | `test_allow_simultaneous_appointments_with_unique_practitioner()` | Positive  | project/tests/test_services.py      | When booking in a duplicate timeslot, confirm that the practitioner name differs, and allow the appointment if the practitioners are distinct, disallow if not | [results]                | Supplied                     |
-| Repeat cancellation is rejected                                                                    | AC-05.1              | `test_reject_repeat_cancellations()`                              | Negative  | project/tests/test_services.py      | If a cancellation has been performed on an existing appointment, prevent the cancellation from being performed again                                           | [results]                | Supplied                     |
-| Cancelled history remains retrievable in the current session                                       | AC-05.2              | `test_same_session_cancellation_retrieval()`                      | Positive  | project/tests/test_services.py      | Allow cancellations to be viewed within the same session, do not discard data until session ends                                                               | [results]                | Supplied                     |
+| Requirement                                                                                        | Acceptance criterion | Test ID                                                           | Test type | Test name / location           | Expected behaviour                                                                                                                                             | Result / observed status   | Supplied or student-authored |
+|----------------------------------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------|-----------|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|------------------------------|
+| Valid required patient data with an unused ID is stored                                            | AC-01.1              | `test_patient_data_retained_while_id_unused()`                    | Positive  | project/tests/test_services.py | When valid patient data is submitted with an unused ID, the data is stored regardless and is accessible                                                        | Passed, green [20%]        | Student-authored             |
+| Registration with an existing patient ID is rejected                                               | AC-01.2              | `test_disallow_duplicate_id_on_registration()`                    | Negative  | project/tests/test_services.py | Registration attempt with duplicate ID is rejected                                                                                                             | Passed, green [40%]        | Student-authored             |
+| Same practitioner/exact time/scheduled conflicts; another practitioner at the same time is allowed | AC-04.1 & AC-04.2    | `test_allow_simultaneous_appointments_with_unique_practitioner()` | Positive  | project/tests/test_services.py | When booking in a duplicate timeslot, confirm that the practitioner name differs, and allow the appointment if the practitioners are distinct, disallow if not | Passed, green [60%]        | Student-authored             |
+| Repeat cancellation is rejected                                                                    | AC-05.1              | `test_reject_repeat_cancellations()`                              | Negative  | project/tests/test_services.py | If a cancellation has been performed on an existing appointment, prevent the cancellation from being performed again                                           | Passed, green [80%]        | Student-authored             |
+| Cancelled history remains retrievable in the current session                                       | AC-05.2              | `test_same_session_cancellation_retrieval()`                      | Positive  | project/tests/test_services.py | Allow cancellations to be viewed within the same session, do not discard data until session ends                                                               | Passed, green [100%]       | Student-authored             |
+| Appointment state transitions are guarded                                                          | AC-05.1              | `test_completed_appointment_cannot_be_cancelled()`                | Negative  | project/tests/test_domains.py  | A COMPLETED appointment refuses cancellation and keeps COMPLETED status                                                                                        | Passed, green [50%]        | Student-authored             |
+| Patient/practitioner required fields are validated                                                 | AC-01.1              | `test_construction_rejects_blank_fields_and_trims_valid_text()`   | Boundary  | project/tests/test_domains.py  | Blank required fields raise ValueError and a valid text is trimmed and kept                                                                                    | Passed, green [100%]       | Student-authored             |
 
 ## C Test Design
 
@@ -108,10 +110,10 @@ Arrange test data; act on one meaningful behaviour; assert the required observab
 
 Cover Patient/Practitioner construction and validation; Appointment construction, initial status, cancellation and illegal/repeated transitions. Preserve the four reference intentions described in handout Part C.
 
-| Test ID | Behaviour | Test file/function | Result |
-| ------- | --------- | ------------------ | ------ |
-|         |           |                    |        |
-|         |           |                    |        |
+| Test ID                                                         | Behaviour                                                                                                       | Test file/function                                                                         | Result |
+|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|--------|
+| `test_completed_appointment_cannot_be_cancelled()`              | required_text trims valid Patient and Practitioner fields on construction and raises ValueError for blanks ones | project/tests/test_domains.py::test_completed_appointment_cannot_be_cancelled              | Passed |
+| `test_construction_rejects_blank_fields_and_trims_valid_text()` | A COMPLETED appointment refuses cancel() and keeps original status                                              | project/tests/test_domains.py::test_construction_rejects_blank_fields_and_trims_valid_text | Passed |
 
 ## F Service Test Evidence
 
@@ -119,22 +121,24 @@ Use fresh shared SmartCareDataStore state, registered objects and completed Stag
 
 | Test ID                                                           | Behaviour                                                                                                                              | Requirement / criterion | Test file/function                                                                            | Result |
 |-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------------|--------|
-| `test_patient_data_retained_while_id_unused()`                    | Registering a patient with an unsued ID store the patient object so it can be retrieved again                                          | AC-0.1                  | project/tests/test_services.py::test_patient_data_retained_while_id_unused                    |        |
-| `test_disallow_duplicate_id_on_registration()`                    | Registering with an existing patient ID is rejected and the original record is unchanged                                               | AC-01.2                 | project/tests/test_services.py::test_disallow_duplicate_id_on_registration                    |        |
-| `test_allow_simultaneous_appointments_with_unique_practitioner()` | Double booking a practitioner in the same time slot is rejected, but booking a different practitioner in the same time slot is allowed | AC-04.1 & AC-04.2       | project/tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner |        |
-| `test_reject_repeat_cancellations()`                              | Cancelling an already cancelled appointment is rejected and the status stays CANCELLED                                                 | AC-05.1                 | project/tests/test_services.py::test_reject_repeat_cancellations                              |        |
-| `test_same_session_cancellation_retrieval()`                      | A cancelled appointment is retriable with status CANCELLED, through the store in the current session                                   | AC-05.2                 | project/tests/test_services.py::test_same_session_cancellation_retrieval                      |        |
+| `test_patient_data_retained_while_id_unused()`                    | Registering a patient with an unsued ID store the patient object so it can be retrieved again                                          | AC-0.1                  | project/tests/test_services.py::test_patient_data_retained_while_id_unused                    | Passed |
+| `test_disallow_duplicate_id_on_registration()`                    | Registering with an existing patient ID is rejected and the original record is unchanged                                               | AC-01.2                 | project/tests/test_services.py::test_disallow_duplicate_id_on_registration                    | Passed |
+| `test_allow_simultaneous_appointments_with_unique_practitioner()` | Double booking a practitioner in the same time slot is rejected, but booking a different practitioner in the same time slot is allowed | AC-04.1 & AC-04.2       | project/tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner | Passed |
+| `test_reject_repeat_cancellations()`                              | Cancelling an already cancelled appointment is rejected and the status stays CANCELLED                                                 | AC-05.1                 | project/tests/test_services.py::test_reject_repeat_cancellations                              | Passed |
+| `test_same_session_cancellation_retrieval()`                      | A cancelled appointment is retriable with status CANCELLED, through the store in the current session                                   | AC-05.2                 | project/tests/test_services.py::test_same_session_cancellation_retrieval                      | Passed |
 
 ## G Negative and Boundary Cases
 
 Connect cases to actual contracts and verify unchanged state after rejection.
 
-| Behaviour                                   | Boundary/invalid input                                                      | Expected result | Test ID                                                       |
-|---------------------------------------------|-----------------------------------------------------------------------------|-----------------|---------------------------------------------------------------|
-| Patient lookup before registration          | ID "P1" absent from store                                                   | LookupError     | test_patient_data_retained_while_id_unused                    |
-| Patient register with a duplicate ID        | Existing valid ID "P1" reused with a different name ("Replace")             | ValueError      | test_disallow_duplicate_id_on_registration                    |
-| Practitioner booking conflict               | Same practitioner "D1" and timeslot has two existing SCHEDULED appointments | ValueError      | test_allow_simultaneous_appointments_with_unique_practitioner |
-| Repeat calculation on the same appointment  | A second cancel_appointment("A1") on an appointment already CANCELLED       | ValueError      | test_reject_repeat_cancellations                              |
+| Behaviour                                                    | Boundary/invalid input                                                      | Expected result | Test ID                                                            |
+|--------------------------------------------------------------|-----------------------------------------------------------------------------|-----------------|--------------------------------------------------------------------|
+| Patient lookup before registration                           | ID "P1" absent from store                                                   | LookupError     | test_patient_data_retained_while_id_unused                         |
+| Patient register with a duplicate ID                         | Existing valid ID "P1" reused with a different name ("Replace")             | ValueError      | test_disallow_duplicate_id_on_registration                         |
+| Practitioner booking conflict                                | Same practitioner "D1" and timeslot has two existing SCHEDULED appointments | ValueError      | test_allow_simultaneous_appointments_with_unique_practitioner      |
+| Repeat calculation on the same appointment                   | A second cancel_appointment("A1") on an appointment already CANCELLED       | ValueError      | test_reject_repeat_cancellations                                   |
+| Patient/Practitioner construction with blank required fields | Patient("P1",""), Practitioner("D1", "Taylor Example". "")                  | ValueError      | test_completed_appointment_cannot_be_cancelled                     |
+| Cancelling a non SCHEDULED (COMPLETED) appointment           | Appointments with status COMPLETED are passed to cancel()                   | ValueError      | test_construction_rejects_blank_fields_and_trims_valid_text        |
 
 ## H GitHub Copilot Test Design
 
@@ -229,43 +233,44 @@ See the individual candidate evaluations in Section H. No generated test was cla
 
 Run python -m pytest from project/. Retain all accumulated tests. Record the tested SHA accurately.
 
-| Command    | Working directory | Code SHA   | Passed     | Failed     | Failure summary | Product defect / test defect / unresolved | Evidence and interpretation |
-| ---------- | ----------------- | ---------- | ---------- | ---------- | --------------- | ----------------------------------------- | --------------------------- |
-|            |                   |            |            |            |                 |                                           |                             |
-|            |                   |            |            |            |                 |                                           |                             |
-|            |                   |            |            |            |                 |                                           |                             |
+| Command                                 | Working directory | Code SHA                                  | Passed | Failed | Failure summary             | Product defect / test defect / unresolved            | Evidence and interpretation          |
+|-----------------------------------------|-------------------|-------------------------------------------|--------|--------|-----------------------------|------------------------------------------------------|--------------------------------------|
+| python -m pytest tests/test_domain.py   | project/          | 67387c24c035620de4856dda52c8a1d8fec2cbfd  | Passed |        |                             |                                                      | ran command and passed in the green  |
+| python -m pytest tests/test_services.py | project/          | ffbaa1e3507b2da728c59dc2cf1cc7409435201d  |        | Failed | Raised implementation error | Did not merge appointment cancellation into main yet | Checked main and it didn't have it   |
+| python -m pytest tests/test_services.py | project/          | 0ca4e086d28f97bf1b3cbbac61c4cd887c2ad2e9  | Passed |        |                             |                                                      | ran command and passed in the green  |
+| python -m pytest                        | project/          | 0ca4e086d28f97bf1b3cbbac61c4cd887c2ad2e9  | Passed |        |                             |                                                      | ran command and passed in the green  |
 
-Individual test runs and changed-order independence evidence: [commands, results, links]
+Individual test runs and changed-order independence evidence: [python -m pytest/tests/test_domain.py -> 2 passed], [python -m pytest/tests/test_services.py -> 3 passed, 2 failed before the fix, then after the fix 5 passed]
 Optional tutor-led demonstration notes: [optional; leave blank if not used]
 A meaningful test should detect a relevant incorrect result. Students do not have to perform the demonstration or submit failure/restoration evidence for assessment. The tutor restores the example and reruns its tests. This is not a Stage 8 fault activity.
-Requirement → test → failure/observation → diagnosis → change → verification: [concise links where applicable]
+Requirement → test → failure/observation → diagnosis → change → verification: 
+[AC-05.1 and AC-05.2 -> test_reject_repeat_cancellations, test_same_session_cancellation_retrievable -> NotImplementedError (stage 6: appointment cancellation) -> AppointmentService.cancel_appointment raises NotImplementedError -> implemented the method -> Rerun and both tests pass]
 
 ## K What the Suite Still Does Not Prove
 
-What does your test suite still not prove? [response]
-Coverage if used: [result or not used]
-Which uncovered areas matter, and why does coverage percentage alone not establish correctness? [response]
-Optional fixtures/parametrisation used and why, if any: [response or not used]
+What does your test suite still not prove? Cancelling an appointment ID that doesn't exist, which should raise LookupError.
+Coverage if used: not used
+Which uncovered areas matter, and why does coverage percentage alone not establish correctness? Cancelling an appointment that doesn't exist. No test calls cancel_appointment with an unregistered ID like "A999", which should raise LookupError. Our cancellation tests only use the existing "A1" appointment ID.
+Optional fixtures/parametrisation used and why, if any: not used
 
 ## L Git and Review Evidence
 
 Use links rather than copying GitHub history. Continue the Stage 6 workflow; no commit/PR count, conflict or individual test quota is imposed.
 
-| Issue/task | Branch     | PR         | Reviewer   | Key feedback | Outcome    |
-| ---------- | ---------- | ---------- | ---------- | ------------ | ---------- |
-|            |            |            |            |              |            |
-|            |            |            |            |              |            |
-|            |            |            |            |              |            |
+| Issue/task              | Branch                | PR                                                      | Reviewer | Key feedback | Outcome      |
+|-------------------------|-----------------------|---------------------------------------------------------|----------|--------------|--------------|
+| Write the domain tests  | tests/test_domains    | https://github.com/greatbanks/st1-assignment-3/pull/11  | James    | Satisfied    | Implementing |
+| Write the service tests | tests/test_service.py | https://github.com/greatbanks/st1-assignment-3/pull/10  | Jerald   | Satisfied    | Implemented  |
 
 ## M Contribution Evidence
 
 Record actual work in test design, implementation, review, traceability, diagnosis, necessary fixes and integration. Do not include confidential peer ratings.
 
-| Member     | Actual contribution | Evidence link |
-| ---------- | ------------------- | ------------- |
-|            |                     |               |
-|            |                     |               |
-|            |                     |               |
+| Member | Actual contribution                                          | Evidence link                                                                                                                                                       |
+|--------|--------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| James  | Worked on sections B and C, and reviewed tests/test_domains  | https://github.com/greatbanks/st1-assignment-3/commit/3ad13339e0fd07e10e76992c46ac4596ba549680                                                                      |
+| Janel  | Finalised sections B and C, and wrote and fixed tests        | https://github.com/greatbanks/st1-assignment-3/pull/10 and https://github.com/greatbanks/st1-assignment-3/pull/11/changes/67387c24c035620de4856dda52c8a1d8fec2cbfd  |
+| Jerald | Completed AI sections, and reviewed and merged service tests | https://github.com/greatbanks/st1-assignment-3/pull/8/changes/b9072d18a526ec8705c000adee1c462090033d2f                                                              |
 
 ## N Formative Questions
 
@@ -301,9 +306,9 @@ Every test executed in the SmartCare application must validate a specific requir
 
 ## O Stage Completion
 
-Tested Stage 7 main SHA: [complete]
-Full-suite result: [complete]
-Unresolved defects and effect on baseline: [complete or none]
-Clean working tree and integration evidence: [complete]
-Stage 8 handover status: [complete; no Stage 8 work assigned]
-All tutorial/formative responses and traceability/Copilot decisions complete: [confirm]
+Tested Stage 7 main SHA: complete
+Full-suite result: complete
+Unresolved defects and effect on baseline: none
+Clean working tree and integration evidence: complete
+Stage 8 handover status: Stage 8 work partly assigned
+All tutorial/formative responses and traceability/Copilot decisions complete: confirm
