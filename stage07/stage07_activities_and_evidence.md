@@ -112,7 +112,6 @@ Cover Patient/Practitioner construction and validation; Appointment construction
 | ------- | --------- | ------------------ | ------ |
 |         |           |                    |        |
 |         |           |                    |        |
-|         |           |                    |        |
 
 ## F Service Test Evidence
 
