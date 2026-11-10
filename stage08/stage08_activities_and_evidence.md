@@ -6,7 +6,7 @@ All Assignment 3 stage materials are provided from the beginning. Complete this 
 
 Group/tutorial: Online Group 1, Tuesday 17:30
 Members/cohorts: u3281958, u3217894, u3309034
-Record owner / contribution links for each member: [Populate with links when section is complete]
+Record owner / contribution links for each member: 
 
 Use concise results and accessible artefact links rather than copying entire logs. Keep human-first entries before consulting GitHub Copilot. Link shared evidence once; do not repeat it across sections. No entries below are specimen answers or claimed results.
 
@@ -228,43 +228,43 @@ Each member's substantive contribution and artefact: [complete]
 
 1. What should an engineer do before changing code in response to a failure?
 
-Response: [complete]
+First, attempt to determine the cause of the failure, and ensure there is a good understanding of the full context of the failure within the program (e.g. objects/variables/functions involved). After determining the cause and nature of the failure, attempt to make a minor iterative change to mitigate the failure, repeating until a solution is found.
 
 2. Where should expected behaviour come from during debugging?
 
-Response: [complete]
+Expected behaviour should be described in a document outlining the intended purpose of the program, ideally a sequence diagram.
 
 3. What is a debugging hypothesis?
 
-Response: [complete]
+A debugging hypothesis is an expectation of what issues may exist in the program based on an individual's knowledge and personal interpretation of the program logic, structure, and design. These expectations can be informed through empirical evidence via error handling and exceptions.
 
 4. What is a regression test and why is it retained?
 
-Response: [complete]
+A regression test is a test that is performed regularly throughout the development process to ensure that features remain functional after changes are made to the program. The test is retained so it can be executed again after a change.
 
 5. What is meant by root cause?
 
-Response: [complete]
+The 'root cause' of a failure is the point of failure that can be best attributed as the primary cause for that specific failure.
 
 6. What is refactoring?
 
-Response: [complete]
+Refactoring is the process of rewriting code for the purpose of improvement in a specific area, e.g. overall performance or coherent structure, without changing its functionality.
 
 7. What is a swallowed exception?
 
-Response: [complete]
+A swallowed exception is an exception that has been caught without any handling of the exception, subsequently allowing the program to continue.
 
 8. What is a code smell?
 
-Response: [complete]
+A code smell is a general indication that something is semantically wrong with the code, not necessarily that is it not functional, moreso code that may be difficult to maintain or add features to if it is not refactored.
 
 9. How should GitHub Copilot-generated debugging diagnoses be treated?
 
-Response: [complete]
+With a great deal of skepticism and methodical verification and validation. Each claim should be individually assessed and validated as an actual concern before being addressed.
 
 10. What is the Stage 8 engineering rule?
 
-Response: [complete]
+Structure software for change, not just execution.
 
 ## L. Completion and handover
 
