@@ -95,18 +95,18 @@ Traceback — exception/assertion; expected/observed values; test line; call pat
 
 ## B. Stage 7 baseline and safe preparation
 
-| Question                                                               | Response |
-| ---------------------------------------------------------------------- | -------- |
-| Stage 7 code SHA and requirement baseline                              |          |
-| Baseline test command / working directory / observed result / evidence |          |
-| Clean preparation SHA if a record-only commit followed Stage 7         |          |
-| Branch and preparer / how teammates obtained this branch               |          |
-| Downloaded tool version, source SHA256 and `--check` outcome           |          |
-| `--apply` and `--verify` output summaries / artefact references        |          |
-| Bounded diff inspected and recovery location (not committed)           |          |
-| Prepared faulty-state commit SHA                                       |          |
-| Preparation or recovery issues and resolution, if any                  |          |
-| Initial prepared full-suite command / result / key failures            |          |
+| Question                                                               | Response                                                                                      |
+|------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| Stage 7 code SHA and requirement baseline                              | a79530f46fc6d09f7153e217620c9bf7fd9587b6 / SmartCare A3 Requirements Baseline 2026 revision 2 |
+| Baseline test command / working directory / observed result / evidence | python -m pytest -q / project / 15 passed in 0.01s (in green) /                               |
+| Clean preparation SHA if a record-only commit followed Stage 7         |                                                                                               |
+| Branch and preparer / how teammates obtained this branch               |                                                                                               |
+| Downloaded tool version, source SHA256 and `--check` outcome           |                                                                                               |
+| `--apply` and `--verify` output summaries / artefact references        |                                                                                               |
+| Bounded diff inspected and recovery location (not committed)           |                                                                                               |
+| Prepared faulty-state commit SHA                                       |                                                                                               |
+| Preparation or recovery issues and resolution, if any                  |                                                                                               |
+| Initial prepared full-suite command / result / key failures            |                                                                                               |
 
 ## C. F8-01 diagnosis and repair
 
