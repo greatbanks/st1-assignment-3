@@ -14,7 +14,7 @@ def booked_store():
     store = SmartCareDataStore()
 
     PatientService(store).register_patient("P1", "Alex Example")
-    PatientService(store).register_practitioner("D1", "Taylor Example", "General")
+    PractitionerService(store).register_practitioner("D1", "Taylor Example", "General")
     service = AppointmentService(store) # shortened as a variable
     appointment = service.book_appointment("A1", "P1", "D1", TIME_SLOT)
 
@@ -47,18 +47,19 @@ def test_disallow_duplicate_id_on_registration() -> None:
 
 def test_allow_simultaneous_appointments_with_unique_practitioner() -> None:
     store, service, _ = booked_store()
-    PractitionerService(store).register_patient("P2", "Ash Example")
+    PatientService(store).register_patient("P2", "Ash Example")
     PractitionerService(store).register_practitioner("D2", "Sam Example", "General")
 
     with pytest.raises(ValueError):
-        AppointmentService.book_appointment("A2", "P2", "D1", TIME_SLOT)
+        service.book_appointment("A2", "P2", "D1", TIME_SLOT)
+    assert store.find_appointment("A2") is None
 
-    other = AppointmentService.book_appointment("A3", "P2", "D2", TIME_SLOT)
-    assert other.practitioner.practitioner_id("D2")
+    other = service.book_appointment("A3", "P2", "D2", TIME_SLOT)
+    assert other.practitioner.practitioner_id == "D2"
     assert other.status is AppointmentStatus.SCHEDULED
 
 
-def test_reject_cancellation() -> None:
+def test_reject_repeat_cancellations() -> None:
     _, service, _ = booked_store()
     service.cancel_appointment("A1")
 
@@ -75,4 +76,4 @@ def test_same_session_cancellation_retrieval() -> None:
 
     assert service.find_appointment("A1") is original_app
     assert original_app.status is AppointmentStatus.CANCELLED
-    assert service.list_appointments() == [original_app]
+    assert store.list_appointments() == [original_app]
