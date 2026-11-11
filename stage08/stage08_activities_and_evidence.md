@@ -93,33 +93,116 @@ Traceback — exception/assertion; expected/observed values; test line; call pat
 
 Complete both entries BEFORE Copilot. C/D supply observed/expected/reproduction/test; retain those initial facts and link them here.
 
+
+
+
 ### F8-01 human entry
-Likely cause and why plausible: [complete]
-Evidence intended to inspect / competing explanation / discriminating check: [complete]
-Member and saved sequence/time or commit showing this preceded consultation: [complete]
+
+Likely cause and why plausible: The practitioner conflict-checking logic may not be correctly identifying existing appointments for the same practitioner at the same date and time. This is plausible because the failing tests show that the system accepts a second booking instead of raising the expected ValueError.
+
+Evidence intended to inspect / competing explanation / discriminating check: Inspect appointment_service.book_appointment() and the relevant conflict-checking method in the data store. Check whether existing appointments are retrieved and compared using both practitioner ID and appointment datetime. A competing explanation is that the booking service does not call the conflict-checking method. Compare the service execution path with the data store's conflict-checking result.
+
+Member and saved sequence/time or commit showing this preceded consultation: Member: Jerald. Human-first hypothesis recorded before Copilot consultation. Record the actual save time and preserve the Git diff as evidence.
 
 ### F8-02 human entry
-Likely cause and why plausible: [complete]
-Evidence intended to inspect / competing explanation / discriminating check: [complete]
-Member and saved sequence/time or commit showing this preceded consultation: [complete]
+
+Likely cause and why plausible:
+
+The cancellation process may be removing the appointment from the data store, or the lookup method may be excluding cancelled appointments. This is plausible because test_same_session_cancellation_retrieval produces a LookupError: Appointment not found after cancellation, even though the appointment should remain retrievable.
+
+Evidence intended to inspect / competing explanation / discriminating check:
+
+Inspect cancel_appointment() in the appointment service and find_appointment() in the data store. Check whether cancellation changes the appointment status to CANCELLED while retaining the same appointment object in the store. A competing explanation is that the appointment remains stored but the lookup method incorrectly filters out cancelled appointments. Compare the stored appointment collection before and after cancellation and inspect the result of find_appointment().
+
+Member and saved sequence/time or commit showing this preceded consultation:
+
+Member: Jerald. Human-first hypothesis recorded before Copilot consultation. Record the actual save time and preserve the Git diff as evidence.
+
+
 
 ## F. GitHub Copilot prompts, findings and human decisions
 
 Use the full handout prompt separately for BOTH defects, after E. Keep each actual prompt or accessible reference; include observed behaviour, expected behaviour, reproduction, failing test, human hypothesis, relevant code, three ranked causes and discriminating checks, with the no-rewrite/no-invented-requirements constraints.
 
 ### F8-01 Copilot review
-Actual prompt / output reference and member: [complete]
-1. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-2. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-3. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-Final human conclusion and comparison with initial hypothesis: [complete]
+
+Actual prompt / output reference and member:
+
+Member: Jerald. Consulted GitHub Copilot Chat using the F8-01 debugging prompt. Copilot's response provided three ranked possible causes based on the observed failing tests and stated requirements. Actual response retained in GitHub Copilot Chat.
+
+1. Ranked suggestion: The conflict predicate checks date/time but does not also check practitioner identity.
+
+Evidence check: Inspect AppointmentService.book_appointment() and the conflict-checking method it uses. Check whether the condition compares both the appointment datetime and practitioner ID.
+
+Observed evidence: The existing test output shows that bookings for the same practitioner and datetime are accepted when they should raise ValueError. However, the exact predicate has not yet been inspected.
+
+Evaluation: Plausible, but not yet confirmed.
+
+Decision: Accept as the leading hypothesis for further investigation because it directly explains the observed behaviour while preserving the rule allowing different practitioners to have appointments at the same time.
+
+2. Ranked suggestion: The booking service does not call the conflict validator, or validation is bypassed.
+
+Evidence check: Inspect the execution order in book_appointment() and determine whether conflict validation occurs before the appointment is added to the store.
+
+Observed evidence: The failing tests show that the second booking is accepted. No source-code evidence has yet established whether validation is missing, bypassed or incorrectly ordered.
+
+Evaluation: Plausible but unconfirmed.
+
+Decision: Retain as an alternative hypothesis. Inspect the service execution path before deciding whether it is the cause.
+
+3. Ranked suggestion: The store compares the wrong practitioner identifier or searches the wrong set of appointments.
+
+Evidence check: Inspect the appointment model fields and the data-store conflict or lookup method. Check whether the correct practitioner ID and appointment collection are used.
+
+Observed evidence: The failing tests demonstrate that the conflict is not detected, but do not establish whether an incorrect field or collection is responsible.
+
+Evaluation: Possible but less directly supported than the first two suggestions.
+
+Decision: Retain as a lower-ranked alternative until the relevant source code is inspected.
+
+Final human conclusion and comparison with initial hypothesis:
+
+Copilot's highest-ranked suggestion is consistent with my original human-first hypothesis that practitioner conflict-checking logic is not correctly identifying existing appointments for the same practitioner and datetime. Copilot also identified two alternative explanations: validation may be bypassed, or the wrong identifier or appointment collection may be checked. I will inspect the actual service and data-store implementation before confirming the root cause or choosing a repair.
 
 ### F8-02 Copilot review
-Actual prompt / output reference and member: [complete]
-1. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-2. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-3. Ranked suggestion / evidence check / observed evidence / correct, partly correct or wrong / accept, modify or reject with reason: [complete]
-Final human conclusion and comparison with initial hypothesis: [complete]
+
+**Actual prompt / output reference and member:**
+
+Member: Jerald. Consulted GitHub Copilot Chat using the F8-02 debugging prompt. Copilot provided three ranked possible causes based on the observed failing tests and the cancellation-history requirements. Actual response retained in GitHub Copilot Chat.
+
+**1. Ranked suggestion:** The cancellation service removes the appointment from the store instead of marking it as cancelled.
+
+**Evidence check:** Inspect `AppointmentService.cancel_appointment()` and the store methods it calls. Check whether the appointment is removed using `remove`, `pop` or `del`, rather than having its status changed to `CANCELLED`.
+
+**Observed evidence:** `test_same_session_cancellation_retrieval` reports `LookupError` after cancellation. `test_reject_repeat_cancellations` also reports `LookupError` instead of the expected `ValueError`. The actual removal operation has not yet been confirmed.
+
+**Evaluation:** Plausible and strongly consistent with both failing tests.
+
+**Decision:** Accept as the leading hypothesis for further investigation because it directly explains why the appointment cannot be retrieved and why repeated cancellation produces the wrong exception.
+
+**2. Ranked suggestion:** The lookup method excludes cancelled appointments from its results.
+
+**Evidence check:** Inspect `SmartCareDataStore.find_appointment()` and the appointment-listing methods. Check whether they filter out appointments with `CANCELLED` status and whether the object remains in the underlying collection.
+
+**Observed evidence:** Same-session retrieval fails after cancellation, but the current test output does not establish whether the appointment was deleted or merely excluded by lookup.
+
+**Evaluation:** Plausible but unconfirmed.
+
+**Decision:** Retain as an alternative hypothesis. Inspect the lookup implementation and backing collection before confirming the cause.
+
+**3. Ranked suggestion:** The repeated-cancellation guard checks the wrong state or runs in the wrong order.
+
+**Evidence check:** Inspect the order of lookup, status validation and exception handling in `cancel_appointment()`.
+
+**Observed evidence:** The repeated-cancellation test raises `LookupError` instead of the expected `ValueError`. The current output does not establish why the status guard is not reached.
+
+**Evaluation:** Plausible as a secondary explanation, potentially related to the first or second suggestion.
+
+**Decision:** Retain as a lower-ranked hypothesis until the cancellation and lookup code is inspected.
+
+**Final human conclusion and comparison with initial hypothesis:**
+
+Copilot's leading suggestion supports my original human-first hypothesis that cancellation may remove the appointment from the data store instead of retaining it with `CANCELLED` status. It also identified an alternative explanation: the appointment may remain stored but be excluded by the lookup method. The incorrect exception on repeated cancellation may indicate that the lookup or status-checking order is also affected. I will inspect the actual implementation before confirming the root cause or choosing a repair.
 
 ## G. Failing to passing regression evidence
 
