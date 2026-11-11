@@ -266,11 +266,11 @@ Use links rather than copying GitHub history. Continue the Stage 6 workflow; no 
 
 Record actual work in test design, implementation, review, traceability, diagnosis, necessary fixes and integration. Do not include confidential peer ratings.
 
-| Member | Actual contribution                                                                                       | Evidence link                                                                                                                                                       |
-|--------|-----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| James  | Worked on sections B and C, and reviewed tests/test_domains                                               | https://github.com/greatbanks/st1-assignment-3/commit/3ad13339e0fd07e10e76992c46ac4596ba549680                                                                      |
-| Janel  | Completed sections A, D, E, F, G, J, K, L, M and N. Finalised sections B and C, and wrote and fixed tests | https://github.com/greatbanks/st1-assignment-3/pull/10 and https://github.com/greatbanks/st1-assignment-3/pull/11/changes/67387c24c035620de4856dda52c8a1d8fec2cbfd  |
-| Jerald | Completed AI sections H and I, and reviewed and merged service tests                                      | https://github.com/greatbanks/st1-assignment-3/pull/8/changes/b9072d18a526ec8705c000adee1c462090033d2f                                                              |
+| Member | Actual contribution                                                                                       | Evidence link                                                                                                      |
+|--------|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| James  | Worked on sections B and C, and reviewed tests/test_domains                                               | https://github.com/greatbanks/st1-assignment-3/commit/3ad13339e0fd07e10e76992c46ac4596ba549680                     |
+| Janel  | Completed sections A, D, E, F, G, J, K, L, M and N. Finalised sections B and C, and wrote and fixed tests | https://github.com/greatbanks/st1-assignment-3/pull/10 and https://github.com/greatbanks/st1-assignment-3/pull/11  |
+| Jerald | Completed AI sections H and I, and reviewed and merged service tests                                      | https://github.com/greatbanks/st1-assignment-3/pull/8/changes/b9072d18a526ec8705c000adee1c462090033d2f             |
 
 ## N Formative Questions
 
