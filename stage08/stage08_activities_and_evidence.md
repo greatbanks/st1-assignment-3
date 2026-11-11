@@ -40,7 +40,11 @@ Response and reason:
 
 Choose the cancelled-history scenario or a same-practitioner/time booking. Before changing code, record expected behaviour, observed behaviour, minimal reproduction, a hypothesis and evidence to inspect. Use a requirement to justify the expectation. Keep the initial hypothesis even if later evidence disproves it.
 
-Response and reason: [complete]
+Chosen scenario: Cancelled-history
+
+| Expected behaviour                                           | Observed behaviour                                                                                                                                                                                                                                                                   | Minimal reproduction                                                                                                                                                                                                                    | Hypothesis                          | Evidence to inspect                 |
+|--------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|-------------------------------------|
+| Cancelled history remains retrievable in the current session | When an appointment is attempted to be cancelled, its status is checked to ensure it is not an invalid cancellation attempt, then the status is updated only if the cancellation attempt is valid. The appointment data is retained under a CANCELLED status until the session ends. | <a href="https://github.com/greatbanks/st1-assignment-3/blob/main/project/smartcare/domain.py">Domain</a>&nbsp;&amp;&nbsp;<a href="https://github.com/greatbanks/st1-assignment-3/blob/main/project/smartcare/services.py">Services</a> | N/A - feature functions as intended | N/A - feature functions as intended |
 
 ### A.3 Test defect or product defect
 
