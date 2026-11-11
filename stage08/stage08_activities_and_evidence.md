@@ -127,7 +127,7 @@ Traceback — exception/assertion; expected/observed values; test line; call pat
 | Human hypothesis and intended checks                              | The practitioner comparison is inverted and only identifies a clash when the practitioners differ rather then being the same. Check the outcomes invert if the comparison is flipped: book the same practitioner at TIME_SLOT which should raise, and a different practitioner at TIME_SLOT which should succeed. |
 | Supported root cause and inspected code/runtime evidence          | In SmartCareDataStore.has_practitioner_conflict, state reads appointment.practitioner.practitioner_id != practitioner_id where behaviour compares equality, . With !=, an existing D1 booking is not matched with a new D1 booking, D1 instead is matched to a new D2 booking.                                    |
 | Smallest justified fix / diff / why other behaviour is preserved  | Restore the equality comparison appointment.practitioner.practitioner_id == practitioner_id. The enum for status is status.value == "scheduled", leaving enum to be refactored rather then changing it during this repair.                                                                                        |
-| Repair SHA / focused verification result                          | b8daa61fe20896f288b2e770e2d603f97e351c5e / tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner PASSED; tests/test_starter.py::test_conflict_rule_and_different_practitioner PASSED <a href="https://github.com/greatbanks/st1-assignment-3/pull/14">[screenshot]</a>            |
+| Repair SHA / focused verification result                          | `b8daa61fe20896f288b2e770e2d603f97e351c5e` / tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner PASSED; tests/test_starter.py::test_conflict_rule_and_different_practitioner PASSED <a href="https://github.com/greatbanks/st1-assignment-3/pull/14">[screenshot]</a>            |
 
 
 ## D. F8-02 diagnosis and repair
@@ -141,7 +141,7 @@ Traceback — exception/assertion; expected/observed values; test line; call pat
 | Human hypothesis and intended checks                              | When an appointment is cancelled the lookup excludes it but the appointment is still retained in store. Check that list_appointments() after cancellation still contains the object while find_appointment returns None.                                                 |
 | Supported root cause and inspected code/runtime evidence          | In SmartCareDataStore.find_appointment, the state reads appointment.status.value != "cancelled" which returns appointments that are not equal to cancelled and cancelled appointments are returned as None.                                                              |
 | Smallest justified fix / diff / why other behaviour is preserved  | Remove the cancelled-status exclusion lookup so that lookup returns any stored appointment by their ID. list_appointments cancel transition is untouched to preserve the behaviour for AC-05.3: repeated cancellation is rejected.                                       |
-| Repair SHA / focused verification result                          | 3073876aeba04f3dd0fe3a4f29f179d17ff7442e / tests/test_services.py::test_same_session_cancellation_retrieval PASSED and tests/test_services.py::test_reject_repeat_cancellations PASSED <a href="https://github.com/greatbanks/st1-assignment-3/pull/15">[screenshot]</a> | 
+| Repair SHA / focused verification result                          | `3073876aeba04f3dd0fe3a4f29f179d17ff7442e` / tests/test_services.py::test_same_session_cancellation_retrieval PASSED and tests/test_services.py::test_reject_repeat_cancellations PASSED <a href="https://github.com/greatbanks/st1-assignment-3/pull/15">[screenshot]</a> | 
 
 ## E. Human-first hypotheses
 
@@ -260,13 +260,13 @@ Copilot's leading suggestion supports my original human-first hypothesis that ca
 
 ## G. Failing to passing regression evidence
 
-| Checkpoint                                     | Code SHA or precise diff | Command and working directory | Actual result and artefact reference |
-|------------------------------------------------|--------------------------|-------------------------------|--------------------------------------|
-| F8-01 before repair                            |                          |                               |                                      |
-| F8-01 after repair                             |                          |                               |                                      |
-| F8-02 before repair                            |                          |                               |                                      |
-| F8-02 after repair                             |                          |                               |                                      |
-| Full suite after both repairs, before refactor |                          |                               |                                      |
+| Checkpoint                                     | Code SHA or precise diff                                                                                                              | Command and working directory                             | Actual result and artefact reference                     |
+|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|----------------------------------------------------------|
+| F8-01 before repair                            | `20b58c327177642eb5b8bacb10e3153210b00b31`                                                                                            | python -m pytest tests/test_regressions.py -v in project/ | 2 failed in 0.02s, <a href="">[terminal screenshot]</a>  |
+| F8-01 after repair                             | `b8daa61fe20896f288b2e770e2d603f97e351c5e` / diff: practitioner_id != practitioner_id -> practitioner_id in has_practitioner_conflict | python -m pytest tests/test_regressions.py -v in project/ |                                                          |
+| F8-02 before repair                            | `b8daa61fe20896f288b2e770e2d603f97e351c5e`                                                                                            | python -m pytest tests/test_regressions.py -v in project/ |                                                          |
+| F8-02 after repair                             | `3073876aeba04f3dd0fe3a4f29f179d17ff7442e` / diff: removed appointment.status != "cancelled" from find_appointment                    | python -m pytest tests/test_regressions.py -v in project/ |                                                          |
+| Full suite after both repairs, before refactor | `3073876aeba04f3dd0fe3a4f29f179d17ff7442e` plus regression commit `bcfbcae0e70b57c98e4e4e8bf202eb6d15dab484d`                         | python -m pytest -q in project/                           |                                                          |
 
 Explain how the assertions detect each relevant incorrect result and protect previous behaviour: [complete]
 Unrelated failures investigated / resolution: [complete or not applicable with reason]
