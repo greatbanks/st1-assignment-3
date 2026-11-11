@@ -114,16 +114,16 @@ Traceback — exception/assertion; expected/observed values; test line; call pat
 
 ## C. F8-01 diagnosis and repair
 
-| Question                                                         | Response |
-| ---------------------------------------------------------------- | -------- |
-| Symptom / observed behaviour                                     |          |
-| Expected behaviour and requirement                               |          |
-| Minimal synthetic reproduction steps                             |          |
-| Meaningful failing test path/name and exact relevant failure     |          |
-| Human hypothesis and intended checks                             |          |
-| Supported root cause and inspected code/runtime evidence         |          |
-| Smallest justified fix / diff / why other behaviour is preserved |          |
-| Repair SHA / focused verification result                         |          |
+| Question                                                          | Response                                                                                                                                                                                                                                                                                                          |
+|-------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Symptom / observed behaviour                                      | test_allow_simultaneous_appointments_with_unique_practitioner failed: DID NOT RAISE <class 'ValueError'>; and also test_conflict_rule_and_different_practitioner failed: DID NOT RAISE <class 'ValueError'>. Booking for the same practitioner in the same time slot is accepted instead of rejected.             |
+| Expected behaviour and requirement                                | FR-05 / BR-05: a second SCHEDULED booking for the same practitioner at the same datetime must be rejected. AC-04.1: Same practitioner/exact time/SCHEDULED conflicts                                                                                                                                              | 
+| Minimal synthetic reproduction steps                              | Register P1/D1, P2/D2; book D1 at TIME_SLOT, then attempt a second D1 booking at TIME_SLOT (expect ValueError, observed accepted). Then book D2 at TIME_SLOT (expect success, observed rejected)                                                                                                                  |
+| Meaningful failing test path/name and exact relevant failure      | tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner failed: DID NOT RAISE <class 'ValueError'> and tests/test_started::test_conflict_rule_and_different_practitioner shares the same failure                                                                                    |
+| Human hypothesis and intended checks                              | The practitioner comparison is inverted and only identifies a clash when the practitioners differ rather then being the same. Check the outcomes invert if the comparison is flipped: book the same practitioner at TIME_SLOT which should raise, and a different practitioner at TIME_SLOT which should succeed. |
+| Supported root cause and inspected code/runtime evidence          | In SmartCareDataStore.has_practitioner_conflict, condition reads appointment.practitioner.practitioner_id != practitioner_id where behaviour compares equality, . With !=, an existing D1 booking is not matched with a new D1 booking, D1 instead is matched to a new D2 booking.                                |
+| Smallest justified fix / diff / why other behaviour is preserved  | Restore the equality comparison appointment.practitioner.practitioner_id == practitioner_id. The enum for status is status.value == 'scheduled', leaving enum to be refactored rather then changing it during this repair.                                                                                        |
+| Repair SHA / focused verification result                          | b8daa61fe20896f288b2e770e2d603f97e351c5e / tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner PASSED; tests/test_starter.py::test_conflict_rule_and_different_practitioner PASSED                                                                                              |
 
 
 ## D. F8-02 diagnosis and repair
