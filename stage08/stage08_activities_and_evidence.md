@@ -286,9 +286,11 @@ External behaviour to preserve / relevant tests: A second SCHEDULED booking for 
 
 Before result: see G, full passing suite.  
 
-Actual change / diff / separate refactor SHA: [complete]
-Focused and full after-refactor commands / working directory / results / evidence: [complete]
-Result — accepted, revised or rejected / reason / behaviour-preservation conclusion: [complete]
+Actual change / diff / separate refactor SHA: one line in data_store: appointment.status.value == "scheduled" -> appointment.status is AppointmentStatus.SCHEDULED / separate commit from both repairs / 21c87dfa524db05591f3c84f3d4e18c8e9399dbe  
+
+Focused and full after-refactor commands / working directory / results / evidence: python -m pytest tests/test_regressions.py::test_f8_01_same_practitioner_conflict_rejected_other_practitioner_allowed tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner tests/test_starter.py::test_conflict_rule_and_different_practitioner -v and python -m pytest -q / in project/ / focused: 3 passed in 0.02s, full: 15 passed in 0.01s /  <a href="https://github.com/greatbanks/st1-assignment-3/pull/19">[terminal screenshot]</a>  
+
+Result — accepted, revised or rejected / reason / behaviour-preservation conclusion: Accepted. The status comparison is equivalent, and the suite result is identical before and after. The change removes a duplicated literal and matches the store's conflict check with the enum contract being used in domain and tests.   
 
 ## I. Git, human review and integration
 
