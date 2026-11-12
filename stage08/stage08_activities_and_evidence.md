@@ -278,10 +278,14 @@ All failures traced to the two injected faults, and the suite is fully gree afte
 
 ## H. Refactoring decision and before/after verification
 
-Smell and exact location: [complete]
-Small proposed structural change / why justified: [complete before editing]
-External behaviour to preserve / relevant tests: [complete]
-Before result: see G, full passing suite.
+Smell and exact location: Magic status string "scheduled" in appointment.status.value under SmartCareDataStore.has_practitioner_conflict, project/smartcare/data_store.py. It duplicates AppointmentStatus enum as a raw string, so a typo or change to the enum value would break the conflict detection.   
+
+Small proposed structural change / why justified: Replace it with appointment.status is AppointmentStatus.SCHEDULED. This matches the existing enum and matches how the other tests and the domain compare status. It behaves correctly but leads to poor maintainability, so it is not a repair but rather refactoring for structural maintenance.  
+
+External behaviour to preserve / relevant tests: A second SCHEDULED booking for the same practitioner during the same time slot raises ValueError (FR-05). A different practitioner at the same time is allowed (AC-04.2). Cancelled or completed appointments still do not block a booking and the method still returns a bool and does not change anything. Relevant tests: test_regressions.py::test_f8_01_same_practitioner_conflict_rejected_other_practitioner_allowed, test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner, test_starter.py::test_conflict_rule_and_different_practitioner, and the full suite.   
+
+Before result: see G, full passing suite.  
+
 Actual change / diff / separate refactor SHA: [complete]
 Focused and full after-refactor commands / working directory / results / evidence: [complete]
 Result — accepted, revised or rejected / reason / behaviour-preservation conclusion: [complete]
