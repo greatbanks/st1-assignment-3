@@ -278,13 +278,19 @@ All failures traced to the two injected faults, and the suite is fully gree afte
 
 ## H. Refactoring decision and before/after verification
 
-Smell and exact location: [complete]
-Small proposed structural change / why justified: [complete before editing]
-External behaviour to preserve / relevant tests: [complete]
-Before result: see G, full passing suite.
-Actual change / diff / separate refactor SHA: [complete]
-Focused and full after-refactor commands / working directory / results / evidence: [complete]
-Result — accepted, revised or rejected / reason / behaviour-preservation conclusion: [complete]
+Smell and exact location: Magic status string "scheduled" in appointment.status.value under SmartCareDataStore.has_practitioner_conflict, project/smartcare/data_store.py. It duplicates AppointmentStatus enum as a raw string, so a typo or change to the enum value would break the conflict detection.   
+
+Small proposed structural change / why justified: Replace it with appointment.status is AppointmentStatus.SCHEDULED. This matches the existing enum and matches how the other tests and the domain compare status. It behaves correctly but leads to poor maintainability, so it is not a repair but rather refactoring for structural maintenance.  
+
+External behaviour to preserve / relevant tests: A second SCHEDULED booking for the same practitioner during the same time slot raises ValueError (FR-05). A different practitioner at the same time is allowed (AC-04.2). Cancelled or completed appointments still do not block a booking and the method still returns a bool and does not change anything. Relevant tests: test_regressions.py::test_f8_01_same_practitioner_conflict_rejected_other_practitioner_allowed, test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner, test_starter.py::test_conflict_rule_and_different_practitioner, and the full suite.   
+
+Before result: see G, full passing suite.  
+
+Actual change / diff / separate refactor SHA: one line in data_store: appointment.status.value == "scheduled" -> appointment.status is AppointmentStatus.SCHEDULED / separate commit from both repairs / 21c87dfa524db05591f3c84f3d4e18c8e9399dbe  
+
+Focused and full after-refactor commands / working directory / results / evidence: python -m pytest tests/test_regressions.py::test_f8_01_same_practitioner_conflict_rejected_other_practitioner_allowed tests/test_services.py::test_allow_simultaneous_appointments_with_unique_practitioner tests/test_starter.py::test_conflict_rule_and_different_practitioner -v and python -m pytest -q / in project/ / focused: 3 passed in 0.02s, full: 15 passed in 0.01s /  <a href="https://github.com/greatbanks/st1-assignment-3/pull/19">[terminal screenshot]</a>  
+
+Result — accepted, revised or rejected / reason / behaviour-preservation conclusion: Accepted. The status comparison is equivalent, and the suite result is identical before and after. The change removes a duplicated literal and matches the store's conflict check with the enum contract being used in domain and tests.   
 
 ## I. Git, human review and integration
 
