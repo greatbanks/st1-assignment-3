@@ -8,7 +8,7 @@ Group/tutorial: Online Group 1, Tuesday 17:30
 
 Members/cohorts: u3281958, u3217894, u3309034
 
-Record owner / contribution links for each member: 
+Record owner / contribution links for each member: No single record owner, roughly equal ownership between contributors. Major contributions: <a href="https://github.com/greatbanks/st1-assignment-3/pull/20">Janel</a>, <a href="https://github.com/greatbanks/st1-assignment-3/commit/5da00df9b4cffeeaa17b244fa6185f44eb57d80f">James</a>, <a href="https://github.com/greatbanks/st1-assignment-3/commit/fc7969499e3df33b8af762c0c1d43fd410680570">Jerald</a>
 
 Use concise results and accessible artefact links rather than copying entire logs. Keep human-first entries before consulting GitHub Copilot. Link shared evidence once; do not repeat it across sections. No entries below are specimen answers or claimed results.
 
@@ -50,7 +50,9 @@ Chosen scenario: Cancelled-history
 
 A test expects cancelled appointments to be deleted, but FR-07 says history must be retained. What should be changed? Explain why. Also decide whether a test expecting different practitioners at the same time to conflict reflects AC-04.2. Do not assume every failing test is correct.
 
-Response and reason: [complete]
+Response and reason:
+
+It is not necessarily an issue for a test to expect a differing result than a feature requirement without understanding the context or methodology behind the test. However, if the test must be run in future and is expected to pass and align with feature requirements, the test should be changed to align with the actual feature requirements of the application, and ensure functionality by testing other aspects of the program.
 
 ### A.4 Refactoring smell hunt
 
@@ -58,48 +60,45 @@ Consider a hypothetical 70-line AppointmentService method containing duplicate s
 
 Classify these proposed changes as refactoring, repair or feature: rename appt to appointment; extract a repeated conflict helper; add rescheduling; restore retained cancellation lookup; replace a magic status string with the existing enum. Explain the behaviour that must remain unchanged.
 
-Response and reason: [complete]
+Response and reason: 
+
+| Proposed change                                      | Refactoring, Repair or Feature | Unchanged behaviour                                                        |
+|------------------------------------------------------|--------------------------------|----------------------------------------------------------------------------|
+| Rename appt to appointment                           | Refactoring                    | Core functionality of code using "appt"                                    |
+| Extract a repeated conflict helper                   | Refactoring                    | Core functionality of the function                                         |
+| Add rescheduling                                     | Feature                        | The rest of the codebase                                                   |
+| Restore retained cancellation lookup                 | Repair                         | The rest of the codebase                                                   |
+| Replace a magic status string with the existing enum | Refactoring                    | Value of the magic status string (i.e. enum should have the same function) |
 
 ### A.5 Traceback and hypothesis ranking
 
 Using one actual failure, identify its exception/assertion, expected and observed values, test line, application call path and supporting requirement. List three plausible causes and rank them by fit with the available evidence. For each cause, name a check that could distinguish it from the others. Explain why a traceback alone does not establish the cause.
 
-Response and reason: [complete]
+Response and reason: 
+
+`test_allow_simultaneous_appointments_with_unique_practitioner()` threw a ValueError. 
+
+3 possible causes:
+
+1. Program is not handling conflict checking as intended
+2. Incorrect enum being used for a booking
+3. Booking service method is not calling the conflict check
+
+3 distinguishing checks for causes:
+
+1. Isolate logic and test all cases
+2. Iterate through all enum options and check if there is a logic error
+3. Inspect code and ensure conflict check is being performed
+
+A traceback alone will only indicate the type of error, not the root cause of the error.
 
 ### A.6 Exit question
 
 Why is changing code immediately after seeing a failure often a poor debugging strategy?
 
-Response and reason: [complete]
+Response and reason: 
 
-Classification responses (1–5, each with reason): 
-
-1. 
-2. 
-3. 
-4. 
-5. 
-
-Tutorial debugging record — expected; observed; reproduction; hypothesis; evidence to inspect: 
-
-| Debugging step      | Response |
-| ------------------- | -------- |
-| Expected            |          |
-| Observed            |          |
-| Reproduction        |          |
-| Hypothesis          |          |
-| Evidence to inspect |          |
-
-Traceback — exception/assertion; expected/observed values; test line; call path; requirement; ranked causes and discriminating checks: 
-
-| Traceback step                          | Response |
-| --------------------------------------- | -------- |
-| Exception/assertion                     |          |
-| Expected/observed values                |          |
-| Test line                               |          |
-| Call path                               |          |
-| Requirement                             |          |
-| Ranked causes and discriminating checks |          |
+Changing code immediately before isolation and fully understanding the nature of the failure introduces the possibility that more issues will be introduced inadvertantly, and that previously functional aspects of the program may cease to function as intended.
 
 ## B. Stage 7 baseline and safe preparation
 
@@ -147,9 +146,6 @@ Traceback — exception/assertion; expected/observed values; test line; call pat
 
 Complete both entries BEFORE Copilot. C/D supply observed/expected/reproduction/test; retain those initial facts and link them here.
 
-
-
-
 ### F8-01 human entry
 
 Likely cause and why plausible: The practitioner conflict-checking logic may not be correctly identifying existing appointments for the same practitioner at the same date and time. This is plausible because the failing tests show that the system accepts a second booking instead of raising the expected ValueError.
@@ -171,8 +167,6 @@ Inspect cancel_appointment() in the appointment service and find_appointment() i
 Member and saved sequence/time or commit showing this preceded consultation:
 
 Member: Jerald. Human-first hypothesis recorded before Copilot consultation. Record the actual save time and preserve the Git diff as evidence.
-
-
 
 ## F. GitHub Copilot prompts, findings and human decisions
 
@@ -294,20 +288,28 @@ Result — accepted, revised or rejected / reason / behaviour-preservation concl
 
 ## I. Git, human review and integration
 
-Issues for both defects / refactor scope and owners: [complete]
-Branch / prepared, repair and refactor checkpoints: [link B/C/D/H]
-PR link and another member's reviewer identity: [complete]
-Key human feedback, difference from Copilot findings and response/outcome: [complete]
-Actual review approval / merge evidence: [complete]
-Integrated code SHA and team pull/retest command / working directory / result: [complete]
-Evidence-only later SHA / explanation if different: [complete or not applicable]
-Each member's substantive contribution and artefact: [complete]
+Issues for both defects / refactor scope and owners: No defects identified, scope and ownership unchanged
+Branch / prepared, repair and refactor checkpoints: N/A
+PR link and another member's reviewer identity: <a href="https://github.com/greatbanks/st1-assignment-3/commit/e63bdf22048b655d545714675afd844bc38d92e6#diff-2466a553164d4bfe9beb10fc1eab176e01078c60dc098a73f2f1ad38567dcdec">Janel PR, James approval</a>
+Key human feedback, difference from Copilot findings and response/outcome: Described in detail in Section J
+Actual review approval / merge evidence: See GitHub PR approvals
+Integrated code SHA and team pull/retest command / working directory / result: `6e492e3b13db233a77acfaa7fe0f9b6694903686`, completed, `project/tests/test_regressions.py`,
+Evidence-only later SHA / explanation if different: N/A
+Each member's substantive contribution and artefact: Links in intro
 
 ## J. Required reflections
 
-1. Which Copilot diagnosis appeared convincing but lacked evidence? [complete; report honestly if none and discuss the least-supported real suggestion]
-2. What evidence changed your group's view? [complete]
-3. How did regression tests protect the refactoring? [complete]
+1. Which Copilot diagnosis appeared convincing but lacked evidence?
+
+Copilot's suggestion that the cancellation service was removing appointments from the data store appeared convincing because two failing tests produced LookupError exceptions after cancellation. However, this diagnosis lacked direct source-code evidence. The test results showed that appointments could not be retrieved after cancellation, but did not establish whether they had been deleted or were simply excluded by the lookup method. We therefore treated it as a possible cause rather than a confirmed diagnosis.
+
+2. What evidence changed your group's view?
+
+The failing tests helped us realise that the cancellation problem involved more than simply changing an appointment's status. The repeated-cancellation test returned a LookupError instead of the expected ValueError, suggesting that the appointment lookup or status-checking sequence might also be involved. We therefore kept alternative explanations in mind until the implementation could be examined further.
+
+3. How did regression tests protect the refactoring?
+
+Regression tests helped us check that changes to the appointment service and data store did not break existing functionality. After refactoring, we reran tests covering booking conflicts, cancellations, appointment retrieval and repeated cancellations. All tests passed, confirming that the existing functionality continued to work as expected.
 
 ## K. Ten formative questions
 
@@ -343,16 +345,16 @@ With a great deal of skepticism and methodical verification and validation. Each
 
 ## L. Completion and handover
 
-- [ ] Existing project, earlier tests and stage records preserved.
-- [ ] Passing Stage 7 SHA and safe preparation details recorded.
-- [ ] Both defects reproduced with meaningful failing tests.
-- [ ] Both human hypotheses recorded before Copilot; actual suggestions evaluated with evidence.
-- [ ] Supported causes and minimal repairs explained; focused and full regression results recorded.
-- [ ] One genuine refactor verified under passing before/after tests.
-- [ ] Human PR review, feedback resolution and integrated retest recorded.
-- [ ] Tutorial, three reflections and ten formative responses complete.
-- [ ] Local recovery metadata excluded from submitted source.
-- [ ] Same project and full suite ready for Stage 9 after Stage 8 integration, verification and recording.
+- [x] Existing project, earlier tests and stage records preserved.
+- [x] Passing Stage 7 SHA and safe preparation details recorded.
+- [x] Both defects reproduced with meaningful failing tests.
+- [x] Both human hypotheses recorded before Copilot; actual suggestions evaluated with evidence.
+- [x] Supported causes and minimal repairs explained; focused and full regression results recorded.
+- [x] One genuine refactor verified under passing before/after tests.
+- [x] Human PR review, feedback resolution and integrated retest recorded.
+- [x] Tutorial, three reflections and ten formative responses complete.
+- [x] Local recovery metadata excluded from submitted source.
+- [x] Same project and full suite ready for Stage 9 after Stage 8 integration, verification and recording.
 
 Verified integrated code SHA / result: see I.
 Submitted SHA and evidence-only difference if any: [complete]
