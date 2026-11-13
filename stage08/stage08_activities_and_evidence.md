@@ -289,12 +289,19 @@ Result — accepted, revised or rejected / reason / behaviour-preservation concl
 ## I. Git, human review and integration
 
 Issues for both defects / refactor scope and owners: No defects identified, scope and ownership unchanged
+
 Branch / prepared, repair and refactor checkpoints: N/A
+
 PR link and another member's reviewer identity: <a href="https://github.com/greatbanks/st1-assignment-3/commit/e63bdf22048b655d545714675afd844bc38d92e6#diff-2466a553164d4bfe9beb10fc1eab176e01078c60dc098a73f2f1ad38567dcdec">Janel PR, James approval</a>
+
 Key human feedback, difference from Copilot findings and response/outcome: Described in detail in Section J
+
 Actual review approval / merge evidence: See GitHub PR approvals
+
 Integrated code SHA and team pull/retest command / working directory / result: `6e492e3b13db233a77acfaa7fe0f9b6694903686`, completed, `project/tests/test_regressions.py`,
+
 Evidence-only later SHA / explanation if different: N/A
+
 Each member's substantive contribution and artefact: Links in intro
 
 ## J. Required reflections
